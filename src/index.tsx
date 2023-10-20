@@ -13,6 +13,7 @@ import { QuizList } from './pages/quiz-list';
 import { RatingTable } from './pages/rating-table';
 
 import './index.scss';
+import { Room } from './pages/room';
 
 const muiTheme = createTheme({
   palette: {
@@ -41,6 +42,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Auth />} />
           <Route path='/quiz-list' element={<QuizList />} />
+          <Route path='/room' element={<Room />} />
           <Route path='/rating' element={<RatingTable />} />
           <Route path='*' element={<div>hot found</div>} />
         </Routes>
