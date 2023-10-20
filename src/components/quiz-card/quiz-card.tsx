@@ -10,7 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import './quiz-card.scss';
 
 interface QuizCardProps {
-  quiz: Quiz;
+  quiz: Pick<Quiz, 'id' | 'title'>;
 }
 
 const QuizCard: FC<QuizCardProps> = ({ quiz }) => {

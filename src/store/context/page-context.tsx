@@ -7,7 +7,7 @@ type ContextType = {
 
 export const PageContext = React.createContext<ContextType>({
   state: { user: {} },
-  dispatch: () => {},
+  dispatch: ({ type, payload }) => {},
 });
 
 export const usePageContext = () => {
@@ -15,7 +15,7 @@ export const usePageContext = () => {
   return state;
 };
 
-enum ActionType {
+export enum ActionType {
   SET_USER = 'SET_USER',
 }
 
