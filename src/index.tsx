@@ -9,9 +9,10 @@ import createTheme from '@mui/material/styles/createTheme';
 import { store } from './store/reducers/store';
 import { Auth } from './pages/auth';
 import { PageContextProvider, usePageContext } from './store/context/page-context';
+import { QuizList } from './pages/quiz-list';
+import { RatingTable } from './pages/rating-table';
 
 import './index.scss';
-import { QuizList } from './pages/quiz-list';
 
 const muiTheme = createTheme({
   palette: {
@@ -40,6 +41,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Auth />} />
           <Route path='/quiz-list' element={<QuizList />} />
+          <Route path='/rating' element={<RatingTable />} />
           <Route path='*' element={<div>hot found</div>} />
         </Routes>
       </PageContextProvider>
