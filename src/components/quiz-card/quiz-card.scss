@@ -1,0 +1,33 @@
+@import '/src/media.scss';
+
+.quiz-card {
+  &-wrapper {
+    padding: 10px 20px;
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    @include phone {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  &-title {
+    width: 80%;
+
+    @include phone {
+      width: 100%;
+    }
+  }
+
+  &-button:last-child {
+    margin-left: 15px;
+  }
+
+  &-button-wrapper {
+    display: flex;
+    margin-left: auto;
+    padding-left: 15px;
+  }
+}

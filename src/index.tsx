@@ -10,14 +10,18 @@ import { store } from './store/reducers/store';
 import { Auth } from './pages/auth';
 
 import './index.scss';
+import { QuizList } from './pages/quiz-list';
 
 const muiTheme = createTheme({
   palette: {
     primary: {
-      main: '#ff5317',
+      main: '#006ee6',
     },
     secondary: {
       main: '#0060d0',
+    },
+    warning: {
+      main: '#ff3b30',
     },
   },
 });
@@ -29,6 +33,7 @@ const App = () => {
     <div className='App'>
       <Routes>
         <Route path='/' element={<Auth />} />
+        <Route path='/quiz-list' element={<QuizList />} />
         <Route path='*' element={<div>hot found</div>} />
       </Routes>
     </div>

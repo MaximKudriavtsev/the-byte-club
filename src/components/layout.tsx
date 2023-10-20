@@ -7,12 +7,12 @@ type Props = {
 
 export const Layout: FC<Props> = ({ children }) => {
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={2}></Grid>
-      <Grid item xs={8}>
+    <Grid container>
+      <Grid item xs={1} sm={2}></Grid>
+      <Grid item xs={10} sm={8}>
         {children}
       </Grid>
-      <Grid item xs={2}></Grid>
+      <Grid item xs={1} sm={2}></Grid>
     </Grid>
   );
 };
