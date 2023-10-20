@@ -6,7 +6,7 @@ import { Api } from './api';
 const REMOTE_HOST = 'remote-ip';
 const URL = process.env.MODE === 'production' ? '/api' : `${REMOTE_HOST}/api`;
 
-const productionApi: Api = {
+export const productionApi: Api = {
   getList: ({ skip, take }) => {
     return fetch(`${URL}/list/?${queryString.stringify({ skip, take })}`, {
       method: 'GET',
@@ -70,7 +70,7 @@ const productionApi: Api = {
    * POST: Покинуть сессию квиза
    */
   leaveQuizSession: (sessionId: number, userId: number) => {
-    return fetch(`${URL}/sessionId/${sessionId}/leave`, {
+    return fetch(`${URL}/session/${sessionId}/leave`, {
       method: 'POST',
       body: JSON.stringify({ userId }),
     })

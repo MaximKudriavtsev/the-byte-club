@@ -38,6 +38,14 @@ export type Answer = {
   deltaTime: number; // ms
 };
 
-export type Websocket = {
+export type RatingTableRow = {
+  userId: number;
+  name: string;
+  time: number;
+  score: number;
+};
+
+export type WsQuestionId = {
   questionId: number;
+  ratingTable: RatingTableRow[];
 };
