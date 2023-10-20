@@ -9,7 +9,11 @@ export const QuizList = () => {
 
   return (
     <Layout>
-      {isLoading ? <div>Loading...</div> : data?.items.map(quiz => <QuizCard quiz={quiz} />)}
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        data?.items.map(quiz => <QuizCard key={quiz.id} quiz={quiz} />)
+      )}
     </Layout>
   );
 };
