@@ -6,7 +6,7 @@ import { Api } from './api';
 const REMOTE_HOST = 'remote-ip';
 const URL = process.env.MODE === 'production' ? '/api' : `${REMOTE_HOST}/api`;
 
-const productionApi: Api = {
+export const productionApi: Api = {
   getList: ({ skip, take }) => {
     return fetch(`${URL}/list/?${queryString.stringify({ skip, take })}`, {
       method: 'GET',
