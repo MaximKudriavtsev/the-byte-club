@@ -8,6 +8,7 @@ import createTheme from '@mui/material/styles/createTheme';
 
 import { store } from './store/reducers/store';
 import { Auth } from './pages/auth';
+import { PageContextProvider, usePageContext } from './store/context/page-context';
 
 import './index.scss';
 
@@ -25,12 +26,18 @@ const muiTheme = createTheme({
 const queryClient = new QueryClient();
 
 const App = () => {
+  const state = usePageContext();
+
+  console.log(state);
+
   return (
     <div className='App'>
-      <Routes>
-        <Route path='/' element={<Auth />} />
-        <Route path='*' element={<div>hot found</div>} />
-      </Routes>
+      <PageContextProvider>
+        <Routes>
+          <Route path='/' element={<Auth />} />
+          <Route path='*' element={<div>hot found</div>} />
+        </Routes>
+      </PageContextProvider>
     </div>
   );
 };
