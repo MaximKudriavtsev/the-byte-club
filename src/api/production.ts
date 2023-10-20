@@ -7,8 +7,17 @@ const REMOTE_HOST = 'remote-ip';
 const URL = process.env.MODE === 'production' ? '/api' : `${REMOTE_HOST}/api`;
 
 export const productionApi: Api = {
+  authUser: name => {
+    return fetch(`${URL}/auth`, {
+      method: 'POST',
+      body: JSON.stringify({ name }),
+    })
+      .then(checkIfError)
+      .then(parseToJson)
+      .catch(logError);
+  },
   getList: ({ skip, take }) => {
-    return fetch(`${URL}/list/?${queryString.stringify({ skip, take })}`, {
+    return fetch(`${URL}/list?${queryString.stringify({ skip, take })}`, {
       method: 'GET',
     })
       .then(checkIfError)

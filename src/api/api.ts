@@ -1,6 +1,11 @@
-import { Quiz } from './types';
+import { Quiz, User } from './types';
 
 export type Api = {
+  /**
+   * POST: авторизация пользователя, передаем только имя
+   * @returns Возвращает пользователя с id
+   */
+  authUser: (userName: string) => Promise<User>;
   /**
    * GET: Возвращает список доступных квизов
    * Используем query params skip & take для пейджирования
