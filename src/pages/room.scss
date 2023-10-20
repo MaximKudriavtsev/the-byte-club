@@ -1,0 +1,50 @@
+@import '/src/media.scss';
+
+.room {
+  &-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  &-qr {
+    width: 100%;
+    height: auto;
+    &-wrapper {
+      box-sizing: border-box;
+      padding: 20px;
+      width: 30%;
+      margin-bottom: 20px;
+      @include tablet {
+        width: 50%;
+      }
+      @include phone {
+        width: 80%;
+      }
+    }
+  }
+
+  &-start-button {
+    width: 30%;
+    @include tablet {
+      width: 50%;
+    }
+    @include phone {
+      width: 80%;
+    }
+  }
+
+  &-user {
+    &-counter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    &-avatars {
+      margin-top: 20px;
+    }
+  }
+}

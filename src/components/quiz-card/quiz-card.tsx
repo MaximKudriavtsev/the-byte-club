@@ -25,7 +25,7 @@ const QuizCard: FC<QuizCardProps> = ({ quiz }) => {
   };
 
   return (
-    <Paper elevation={3} className='quiz-card-wrapper'>
+    <Paper className='quiz-card-wrapper'>
       <h3> {quiz.title}</h3>
       <div className='quiz-card-button-wrapper'>
         {user.isAdmin ? (
