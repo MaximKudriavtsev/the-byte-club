@@ -70,7 +70,7 @@ const productionApi: Api = {
    * POST: Покинуть сессию квиза
    */
   leaveQuizSession: (sessionId: number, userId: number) => {
-    return fetch(`${URL}/sessionId/${sessionId}/leave`, {
+    return fetch(`${URL}/session/${sessionId}/leave`, {
       method: 'POST',
       body: JSON.stringify({ userId }),
     })
