@@ -1,18 +1,19 @@
 export type User = {
-  id: string;
+  id: number;
   name: string;
   image?: string;
   isAdmin: boolean;
 };
 
 export type Quiz = {
-  id: string;
+  id: number;
   title: string;
   questions: Question[];
 };
 
 export type Question = {
-  id: string;
+  id: number;
+  quizId: number;
   title: string;
   variants: Variant[];
   time: number;
@@ -23,19 +24,20 @@ export type Question = {
 };
 
 export type Variant = {
-  id: string;
+  id: number;
+  questionId: number;
   text: string;
   isRight: boolean;
 };
 
 export type Answer = {
-  userId: string;
-  quizId: string;
-  questionId: string;
-  variantId: string;
+  userId: number;
+  quizId: number;
+  questionId: number;
+  variantId: number;
   deltaTime: number; // ms
 };
 
 export type Websocket = {
-  questionId: string;
+  questionId: number;
 };
