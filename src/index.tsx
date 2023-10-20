@@ -7,6 +7,7 @@ import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import createTheme from '@mui/material/styles/createTheme';
 
 import { store } from './store/reducers/store';
+import { Auth } from './pages/auth';
 
 import './index.scss';
 
@@ -27,7 +28,7 @@ const App = () => {
   return (
     <div className='App'>
       <Routes>
-        <Route path='/' element={<div>Root</div>} />
+        <Route path='/' element={<Auth />} />
         <Route path='*' element={<div>hot found</div>} />
       </Routes>
     </div>
