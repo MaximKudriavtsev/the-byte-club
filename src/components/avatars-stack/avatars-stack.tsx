@@ -21,21 +21,6 @@ const AvatarsStack: FC<AvatarsStackProps> = ({ users, className }) => {
       {users.map((user, i) => (
         <Avatar user={user} key={i} />
       ))}
-      {users.map((user, i) => (
-        <Avatar user={user} key={i} />
-      ))}
-      {users.map((user, i) => (
-        <Avatar user={user} key={i} />
-      ))}
-      {users.map((user, i) => (
-        <Avatar user={user} key={i} />
-      ))}
-      {users.map((user, i) => (
-        <Avatar user={user} key={i} />
-      ))}
-      {users.map((user, i) => (
-        <Avatar user={user} key={i} />
-      ))}
     </Stack>
   );
 };

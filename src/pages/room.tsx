@@ -10,34 +10,9 @@ import { useMutation, useQuery } from 'react-query';
 import productionApi from '../api/production';
 
 import './room.scss';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ActionType, usePageContext } from '../store/context/page-context';
 import { useSocket } from '../socket-service/socket-hook';
-
-const users: User[] = [
-  {
-    id: 1,
-    name: 'DmitryMorozov',
-    isAdmin: true,
-  },
-  {
-    id: 2,
-    name: 'Max Kudr',
-    isAdmin: true,
-    image:
-      'https://sun37-1.userapi.com/impg/3mge_x8OKZTJswN8w7XtPNxMuXYD7kabKtWzJQ/OEpwQcDow30.jpg?size=1439x2160&quality=96&sign=c4ab44275b5938d08f3ebc8f10cec423&type=album',
-  },
-  {
-    id: 3,
-    name: 'Tony Strap',
-    isAdmin: true,
-  },
-  {
-    id: 4,
-    name: 'Dany Sydr',
-    isAdmin: true,
-  },
-];
 
 export const Room = memo(() => {
   const navigate = useNavigate();
@@ -93,6 +68,13 @@ export const Room = memo(() => {
     }
   }, [state.sessionId, state.user]);
 
+  const users = state.table.map(row => ({
+    id: row.userId,
+    name: row.name,
+    image: '',
+    isAdmin: false,
+  }));
+
   return (
     <Layout>
       {isLoading || isSessionLoading ? (
@@ -125,16 +107,12 @@ export const Room = memo(() => {
               <p className='room-user-counter'>Ожидайте старта игры..</p>
             )}
           </div>
-          <p className='room-user-counter'>{`Подключились ${users.length} человек(а)`}</p>
-          <AvatarsStack
-            users={state.table.map(row => ({
-              id: row.userId,
-              name: row.name,
-              image: '',
-              isAdmin: false,
-            }))}
-            className='room-user-avatars'
-          />
+          {users?.length === 0 ? (
+            <p className='room-user-counter'>Ожидание подключения игроков...</p>
+          ) : (
+            <p className='room-user-counter'>{`Присоединились ${users.length} человек(а)`}</p>
+          )}
+          <AvatarsStack users={users} className='room-user-avatars' />
         </>
       )}
     </Layout>

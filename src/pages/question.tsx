@@ -36,7 +36,9 @@ const Question: FC = memo(() => {
     }
 
     if (currentQuestionId === null) {
-      navigate('/rating');
+      setTimeout(() => {
+        navigate('/rating');
+      }, 1500);
     }
   }, [currentQuestionId]);
 
@@ -45,9 +47,11 @@ const Question: FC = memo(() => {
       setTimeLeft(timeLeft => {
         if (timeLeft - 1 === 0) {
           clearInterval(interval);
-          if (state.sessionId && state.user.isAdmin) {
-            productionApi.switchQuestion(state.sessionId);
-          }
+          setTimeout(() => {
+            if (state.sessionId && state.user.isAdmin) {
+              productionApi.switchQuestion(state.sessionId);
+            }
+          }, 1500);
         }
         return timeLeft - 1;
       });
@@ -72,7 +76,9 @@ const Question: FC = memo(() => {
     <Layout>
       <Paper className='question-wrapper'>
         <div className='question-header'>
-          <p>Вопрос {(currentIndex + 1) / (quiz?.questions.length || 10)}</p>
+          <p>
+            Вопрос {currentIndex + 1} из {quiz?.questions.length || 10}
+          </p>
           <Countdown initialTime={question?.time || 0} key={currentQuestionId} />
         </div>
 
