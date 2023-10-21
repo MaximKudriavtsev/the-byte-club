@@ -2,19 +2,18 @@ import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Layout } from '../components/layout';
 import { Paper } from '@mui/material';
-import { Quiz, User } from '../api/types';
+import { User } from '../api/types';
 import { AvatarsStack } from '../components/icons-stack/avatars-stack';
 import Button from '@mui/material/Button';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useQuery } from 'react-query';
+import productionApi from '../api/production';
 
 import './room.scss';
 
 export const Room = () => {
-  const quiz: Quiz = {
-    title: 'Quiz ebiz 1',
-    id: 1,
-    questions: [],
-  };
+  const { data: quiz, isLoading } = useQuery('quiz-id-1', () => productionApi.getQuiz(1));
+
   const users: User[] = [
     {
       id: 1,
@@ -41,28 +40,34 @@ export const Room = () => {
   ];
 
   const runQuiz = () => {
-    console.log(`Run quiz ${quiz.id}`);
+    console.log(`Run quiz ${quiz?.id}`);
   };
 
   return (
     <Layout>
-      <div className='room-wrapper'>
-        <h2>{quiz.title}</h2>
-        <Paper className='room-qr-wrapper'>
-          <QRCodeSVG value='https://vk.com/id30412729/' className='room-qr' />
-        </Paper>
-        <Button
-          variant='contained'
-          endIcon={<ArrowForwardIosIcon />}
-          onClick={() => runQuiz()}
-          size='large'
-          className='room-start-button'
-        >
-          Начать
-        </Button>
-      </div>
-      <p className='room-user-counter'>{`Подключились ${users.length} человек(а)`}</p>
-      <AvatarsStack users={users} className='room-user-avatars' />
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <div className='room-wrapper'>
+            <h2>{quiz?.title}</h2>
+            <Paper className='room-qr-wrapper'>
+              <QRCodeSVG value='https://vk.com/id30412729/' className='room-qr' />
+            </Paper>
+            <Button
+              variant='contained'
+              endIcon={<ArrowForwardIosIcon />}
+              onClick={() => runQuiz()}
+              size='large'
+              className='room-start-button'
+            >
+              Начать
+            </Button>
+          </div>
+          <p className='room-user-counter'>{`Подключились ${users.length} человек(а)`}</p>
+          <AvatarsStack users={users} className='room-user-avatars' />
+        </>
+      )}
     </Layout>
   );
 };

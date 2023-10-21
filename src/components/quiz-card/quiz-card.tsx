@@ -10,16 +10,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import './quiz-card.scss';
 
 interface QuizCardProps {
-  quiz: Quiz;
+  user: User;
+  quiz: Pick<Quiz, 'id' | 'title'>;
 }
 
-const QuizCard: FC<QuizCardProps> = ({ quiz }) => {
-  const user: User = {
-    id: 1,
-    name: 'Dmitry Morozov',
-    isAdmin: true,
-  };
-
+const QuizCard: FC<QuizCardProps> = ({ quiz, user }) => {
   const runQuiz = () => {
     console.log(`Run quiz ${quiz.id}`);
   };
