@@ -11,6 +11,7 @@ import { Auth } from './pages/auth';
 import { PageContextProvider, usePageContext } from './store/context/page-context';
 import { QuizList } from './pages/quiz-list';
 import { RatingTable } from './pages/rating-table';
+import { CreateQuiz } from './pages/create-quiz';
 
 import './index.scss';
 import { Room } from './pages/room';
@@ -47,6 +48,7 @@ const App = () => {
           <Route path='/question' element={<Question />} />
           <Route path='/room' element={<Room />} />
           <Route path='/rating' element={<RatingTable />} />
+          <Route path='/create-quiz' element={<CreateQuiz />} />
           <Route path='*' element={<div>hot found</div>} />
         </Routes>
       </PageContextProvider>

@@ -1,0 +1,42 @@
+@import '/src/media.scss';
+
+.create-quiz {
+
+  &-wrapper{
+    margin-top: 15px;
+  }
+
+  &-body{
+
+    &-set-title{
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+
+    &-set-description{
+      padding: 10px;
+    }
+  }
+
+  &-controls{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &-add{
+      margin-bottom: 10px;
+    }
+
+    &-save{
+      margin-bottom: 20px;
+    }
+  }
+
+  @include tablet {
+
+  }
+  @include phone {
+
+  }
+}
