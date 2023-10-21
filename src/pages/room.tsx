@@ -3,7 +3,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { Layout } from '../components/layout';
 import { Paper } from '@mui/material';
 import { User } from '../api/types';
-import { AvatarsStack } from '../components/icons-stack/avatars-stack';
+import { AvatarsStack } from '../components/avatars-stack/avatars-stack';
 import Button from '@mui/material/Button';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useMutation, useQuery } from 'react-query';
