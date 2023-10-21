@@ -41,6 +41,7 @@ const App = () => {
       <PageContextProvider>
         <Routes>
           <Route path='/' element={<Auth />} />
+          <Route path='/auth' element={<Auth />} />
           <Route path='/quiz-list' element={<QuizList />} />
           <Route path='/room' element={<Room />} />
           <Route path='/rating' element={<RatingTable />} />

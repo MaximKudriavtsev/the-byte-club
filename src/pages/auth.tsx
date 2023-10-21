@@ -11,7 +11,7 @@ import './auth.scss';
 
 export const Auth = () => {
   const navigate = useNavigate();
-  const [localUserName, setLocalUserName] = useState(localStorage.getItem('userName') || '');
+  const [localUserName, setLocalUserName] = useState('');
   const { dispatch } = usePageContext();
 
   const {
@@ -51,7 +51,6 @@ export const Auth = () => {
           value={localUserName}
           onChange={e => {
             setLocalUserName(e.target.value);
-            localStorage.setItem('userName', e.target.value);
           }}
         />
 

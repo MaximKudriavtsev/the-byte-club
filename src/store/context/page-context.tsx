@@ -1,4 +1,5 @@
 import React, { FC, ReactNode, useContext, useReducer } from 'react';
+import Cookie from 'js-cookie';
 
 type ContextType = {
   state: State;
@@ -6,7 +7,7 @@ type ContextType = {
 };
 
 export const PageContext = React.createContext<ContextType>({
-  state: { user: {} },
+  state: { user: null },
   dispatch: ({ type, payload }) => {},
 });
 
@@ -31,6 +32,7 @@ type State = {
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
     case ActionType.SET_USER: {
+      Cookie.set('user', action.payload);
       return {
         ...state,
         user: action.payload,
@@ -47,7 +49,7 @@ type Props = {
 };
 
 export const PageContextProvider: FC<Props> = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, { user: {} });
+  const [state, dispatch] = useReducer(reducer, { user: Cookie.get('name') || null });
 
   return <PageContext.Provider value={{ state, dispatch }}>{children}</PageContext.Provider>;
 };
