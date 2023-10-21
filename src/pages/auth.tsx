@@ -12,7 +12,7 @@ import './auth.scss';
 export const Auth = memo(() => {
   const navigate = useNavigate();
   const [localUserName, setLocalUserName] = useState('');
-  const { dispatch } = usePageContext();
+  const { state, dispatch } = usePageContext();
 
   const {
     data: user,
@@ -23,7 +23,11 @@ export const Auth = memo(() => {
   useEffect(() => {
     if (user) {
       dispatch({ type: ActionType.SET_USER, payload: user });
-      navigate('/quiz-list');
+      if (state.sessionId) {
+        navigate('/room');
+      } else {
+        navigate('/quiz-list');
+      }
     }
   }, [user]);
 

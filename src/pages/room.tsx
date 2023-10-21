@@ -53,16 +53,13 @@ export const Room = memo(() => {
     { enabled: !!session?.quizId },
   );
 
-  const { mutate, isLoading: isStartSessionLoading } = useMutation(
-    () => productionApi.startQuizSession(state.sessionId || 0),
-    {
-      onSuccess: () => {
-        setTimeout(() => {
-          navigate('/question');
-        }, 500);
-      },
+  const { mutate } = useMutation(() => productionApi.startQuizSession(state.sessionId || 0), {
+    onSuccess: () => {
+      setTimeout(() => {
+        navigate('/question');
+      }, 500);
     },
-  );
+  });
 
   useSocket(state.sessionId);
 
@@ -87,15 +84,17 @@ export const Room = memo(() => {
   useEffect(() => {
     if (!state.sessionId) {
       const urlParams = new URLSearchParams(window.location.search);
-      const sessionId = urlParams.get('session_id') || 0;
-      dispatch({ type: ActionType.SET_SESSION_ID, payload: +sessionId });
+      const sessionId = urlParams.get('session_id') || null;
+      dispatch({ type: ActionType.SET_SESSION_ID, payload: sessionId });
+      if (state.user === null) {
+        navigate('/auth');
+      }
       return;
     }
-  }, [state.sessionId]);
+  }, [state.sessionId, state.user]);
 
   return (
     <Layout>
-      {state.user === null && <Navigate to='/auth' />}
       {isLoading || isSessionLoading ? (
         <div>Loading...</div>
       ) : (
@@ -112,7 +111,7 @@ export const Room = memo(() => {
                 <p>Не удалось создать комнату</p>
               )}
             </Paper>
-            {state.user.isAdmin ? (
+            {state.user?.isAdmin ? (
               <Button
                 variant='contained'
                 endIcon={<ArrowForwardIosIcon />}
