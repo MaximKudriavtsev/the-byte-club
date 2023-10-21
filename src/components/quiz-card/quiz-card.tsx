@@ -27,6 +27,7 @@ const QuizCard: FC<QuizCardProps> = ({ quiz, user }) => {
   useEffect(() => {
     if (data) {
       dispatch({ type: ActionType.SET_SESSION_ID, payload: data.sessionId });
+      dispatch({ type: ActionType.SET_USER, payload: { ...user, isAdmin: true } });
       navigate('/room');
     }
   }, [data]);

@@ -13,6 +13,7 @@ import './room.scss';
 import { Navigate } from 'react-router-dom';
 import { ActionType, usePageContext } from '../store/context/page-context';
 import { useSocket } from '../socket-service/socket-hook';
+import { useNavigate } from 'react-router-dom';
 
 const users: User[] = [
   {
@@ -40,6 +41,7 @@ const users: User[] = [
 ];
 
 export const Room = memo(() => {
+  const navigate = useNavigate();
   const { state, dispatch } = usePageContext();
   const { data: quiz, isLoading } = useQuery('quiz-id-1', () => productionApi.getQuiz(1));
 
@@ -50,7 +52,7 @@ export const Room = memo(() => {
   const runQuiz = () => {
     if (state.sessionId !== undefined && state.sessionId !== null) {
       mutate();
-
+      navigate('/question');
       // TODO: Должны запускать ws соединение
     }
   };
@@ -73,15 +75,19 @@ export const Room = memo(() => {
             <Paper className='room-qr-wrapper'>
               <QRCodeSVG value='https://vk.com/id30412729/' className='room-qr' />
             </Paper>
-            <Button
-              variant='contained'
-              endIcon={<ArrowForwardIosIcon />}
-              onClick={() => runQuiz()}
-              size='large'
-              className='room-start-button'
-            >
-              Начать
-            </Button>
+            {state.user.isAdmin ? (
+              <Button
+                variant='contained'
+                endIcon={<ArrowForwardIosIcon />}
+                onClick={() => runQuiz()}
+                size='large'
+                className='room-start-button'
+              >
+                Начать
+              </Button>
+            ) : (
+              <p className='room-user-counter'>Ожидайте старта игры..</p>
+            )}
           </div>
           <p className='room-user-counter'>{`Подключились ${users.length} человек(а)`}</p>
           <AvatarsStack users={users} className='room-user-avatars' />
