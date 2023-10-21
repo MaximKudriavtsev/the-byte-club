@@ -45,7 +45,7 @@ const Question: FC = memo(() => {
       setTimeLeft(timeLeft => {
         if (timeLeft - 1 === 0) {
           clearInterval(interval);
-          if (state.sessionId) {
+          if (state.sessionId && state.user.isAdmin) {
             productionApi.switchQuestion(state.sessionId);
           }
         }
