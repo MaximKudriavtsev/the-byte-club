@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
+import LoadingButton from '@mui/lab/LoadingButton';
 import productionApi from '../api/production';
 import { ActionType, usePageContext } from '../store/context/page-context';
+import { Layout } from '../components/layout';
+import { TextField, Typography } from '@mui/material';
+
+import './auth.scss';
 
 export const Auth = () => {
-  const [localUser, setLocalUser] = useState('');
+  const [localUserName, setLocalUserName] = useState('');
   const { dispatch } = usePageContext();
-  const { data: user } = useQuery('auth', () => productionApi.authUser(localUser));
+
+  const {
+    data: user,
+    isLoading,
+    mutate: sendUserData,
+  } = useMutation(() => productionApi.authUser(localUserName));
 
   useEffect(() => {
     if (user) {
@@ -14,5 +24,45 @@ export const Auth = () => {
     }
   }, [user]);
 
-  return <div>AUTH</div>;
+  return (
+    <Layout>
+      <div className='auth'>
+        <Typography variant='h2' component='h2' align='center'>
+          Привет!
+        </Typography>
+
+        <br />
+
+        <Typography variant='h4' component='h4' align='center'>
+          Давай знакомиться
+        </Typography>
+
+        <br />
+        <br />
+        <br />
+
+        <TextField
+          fullWidth
+          placeholder='Введи своё имя'
+          variant='outlined'
+          value={localUserName}
+          onChange={e => setLocalUserName(e.target.value)}
+        />
+
+        <br />
+        <br />
+        <br />
+
+        <LoadingButton
+          fullWidth
+          variant='contained'
+          disabled={!localUserName}
+          loading={isLoading}
+          onClick={() => sendUserData()}
+        >
+          Начать!
+        </LoadingButton>
+      </div>
+    </Layout>
+  );
 };
