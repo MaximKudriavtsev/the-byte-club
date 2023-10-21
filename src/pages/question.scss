@@ -1,0 +1,38 @@
+@import '/src/media.scss';
+
+.question {
+  &-header {
+    width: 100%;
+    display: flex;
+    align-items: space-between;
+    justify-content: space-between;
+  }
+  &-title {
+    padding: 0;
+    margin-top: 0;
+  }
+  &-wrapper {
+    margin: 20px 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &-image {
+    object-fit: cover;
+    width: 50%;
+    height: auto;
+    border-radius: 10px;
+
+    @include tablet {
+      width: 70%;
+    }
+
+    @include phone {
+      width: 100%;
+    }
+  }
+  &-variants-wrapper {
+    margin: 20px 0;
+  }
+}
