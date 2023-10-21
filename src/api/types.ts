@@ -49,3 +49,9 @@ export type WsQuestionId = {
   questionId: number;
   ratingTable: RatingTableRow[];
 };
+
+export type Session = {
+  quizId: number;
+  users: User[];
+  adminId: number;
+};

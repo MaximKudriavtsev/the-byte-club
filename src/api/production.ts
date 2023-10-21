@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 
-import { checkIfError, parseToJson, logError } from './utils';
+import { checkIfError, parseToJson, logError, recursiveToCamel } from './utils';
 import { Api } from './api';
 
 const REMOTE_HOST = 'http://51.250.86.225';
@@ -11,9 +11,13 @@ export const productionApi: Api = {
     return fetch(`${URL}/auth`, {
       method: 'POST',
       body: JSON.stringify({ name }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
       .then(checkIfError)
       .then(parseToJson)
+      .then(recursiveToCamel)
       .catch(logError);
   },
   getList: ({ skip, take }) => {
@@ -22,6 +26,7 @@ export const productionApi: Api = {
     })
       .then(checkIfError)
       .then(parseToJson)
+      .then(recursiveToCamel)
       .catch(logError);
   },
   /**
@@ -33,6 +38,7 @@ export const productionApi: Api = {
     })
       .then(checkIfError)
       .then(parseToJson)
+      .then(recursiveToCamel)
       .catch(logError);
   },
   /**
@@ -44,9 +50,13 @@ export const productionApi: Api = {
     return fetch(`${URL}/quiz/${quizId}/create`, {
       method: 'POST',
       body: JSON.stringify({ userId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
       .then(checkIfError)
       .then(parseToJson)
+      .then(recursiveToCamel)
       .catch(logError);
   },
   /**
@@ -60,6 +70,21 @@ export const productionApi: Api = {
     })
       .then(checkIfError)
       .then(parseToJson)
+      .then(recursiveToCamel)
+      .catch(logError);
+  },
+  /**
+   * POST: Получение квиза внутри комнаты
+   *
+   * @returns
+   */
+  getQuizSession: (sessionId: number) => {
+    return fetch(`${URL}/session/${sessionId}`, {
+      method: 'POST',
+    })
+      .then(checkIfError)
+      .then(parseToJson)
+      .then(recursiveToCamel)
       .catch(logError);
   },
   /**
@@ -70,9 +95,13 @@ export const productionApi: Api = {
     return fetch(`${URL}/session/${sessionId}/enter`, {
       method: 'POST',
       body: JSON.stringify({ userId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
       .then(checkIfError)
       .then(parseToJson)
+      .then(recursiveToCamel)
       .catch(logError);
   },
   /**
@@ -82,9 +111,13 @@ export const productionApi: Api = {
     return fetch(`${URL}/session/${sessionId}/leave`, {
       method: 'POST',
       body: JSON.stringify({ userId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
       .then(checkIfError)
       .then(parseToJson)
+      .then(recursiveToCamel)
       .catch(logError);
   },
   /**
@@ -95,9 +128,13 @@ export const productionApi: Api = {
     return fetch(`${URL}/session/${sessionId}/answer`, {
       method: 'POST',
       body: JSON.stringify({ questionId, varianId, userId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
       .then(checkIfError)
       .then(parseToJson)
+      .then(recursiveToCamel)
       .catch(logError);
   },
 };
