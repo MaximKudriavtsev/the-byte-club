@@ -13,18 +13,22 @@ import { Glass } from '../components/glass/glass';
 export const Auth = memo(() => {
   const navigate = useNavigate();
   const [localUserName, setLocalUserName] = useState('');
-  const { dispatch } = usePageContext();
+  const { state, dispatch } = usePageContext();
 
   const {
     data: user,
     isLoading,
     mutate: sendUserData,
-  } = useMutation(() => productionApi.authUser(localUserName));
+  } = useMutation(() => productionApi.authUser(localUserName, state?.sessionId || undefined));
 
   useEffect(() => {
     if (user) {
       dispatch({ type: ActionType.SET_USER, payload: user });
-      navigate('/quiz-list');
+      if (state.sessionId) {
+        navigate('/room');
+      } else {
+        navigate('/quiz-list');
+      }
     }
   }, [user]);
 

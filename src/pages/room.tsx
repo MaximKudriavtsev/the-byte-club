@@ -2,7 +2,6 @@ import React, { memo, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Layout } from '../components/layout';
 import { Paper } from '@mui/material';
-import { User } from '../api/types';
 import { AvatarsStack } from '../components/avatars-stack/avatars-stack';
 import Button from '@mui/material/Button';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -10,36 +9,10 @@ import { useMutation, useQuery } from 'react-query';
 import productionApi from '../api/production';
 
 import './room.scss';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ActionType, usePageContext } from '../store/context/page-context';
 import { useSocket } from '../socket-service/socket-hook';
-import { useNavigate } from 'react-router-dom';
 import { Glass } from '../components/glass/glass';
-
-const users: User[] = [
-  {
-    id: 1,
-    name: 'DmitryMorozov',
-    isAdmin: true,
-  },
-  {
-    id: 2,
-    name: 'Max Kudr',
-    isAdmin: true,
-    image:
-      'https://sun37-1.userapi.com/impg/3mge_x8OKZTJswN8w7XtPNxMuXYD7kabKtWzJQ/OEpwQcDow30.jpg?size=1439x2160&quality=96&sign=c4ab44275b5938d08f3ebc8f10cec423&type=album',
-  },
-  {
-    id: 3,
-    name: 'Tony Strap',
-    isAdmin: true,
-  },
-  {
-    id: 4,
-    name: 'Dany Sydr',
-    isAdmin: true,
-  },
-];
 
 export const Room = memo(() => {
   const navigate = useNavigate();
@@ -55,15 +28,19 @@ export const Room = memo(() => {
     { enabled: !!session?.quizId },
   );
 
-  const { mutate } = useMutation(() => productionApi.startQuizSession(state.sessionId || 0));
+  const { mutate } = useMutation(() => productionApi.startQuizSession(state.sessionId || 0), {
+    onSuccess: () => {
+      setTimeout(() => {
+        navigate('/question');
+      }, 500);
+    },
+  });
 
-  useSocket({ callBack: payload => undefined });
+  useSocket(state.sessionId);
 
   const runQuiz = () => {
     if (state.sessionId !== undefined && state.sessionId !== null) {
       mutate();
-      navigate('/question');
-      // TODO: Должны запускать ws соединение
     }
   };
 
@@ -74,17 +51,32 @@ export const Room = memo(() => {
   }, [quiz]);
 
   useEffect(() => {
+    if (state.currentQuestionId) {
+      navigate('/question');
+    }
+  }, [state.currentQuestionId]);
+
+  useEffect(() => {
     if (!state.sessionId) {
       const urlParams = new URLSearchParams(window.location.search);
-      const sessionId = urlParams.get('session_id') || 0;
-      dispatch({ type: ActionType.SET_SESSION_ID, payload: +sessionId });
+      const sessionId = urlParams.get('session_id') || null;
+      dispatch({ type: ActionType.SET_SESSION_ID, payload: sessionId });
+      if (state.user === null) {
+        navigate('/auth');
+      }
       return;
     }
-  }, [state.sessionId]);
+  }, [state.sessionId, state.user]);
+
+  const users = state.table.map(row => ({
+    id: row.userId,
+    name: row.name,
+    image: '',
+    isAdmin: false,
+  }));
 
   return (
     <Layout header={<h2>{quiz?.title}</h2>}>
-      {state.user === null && <Navigate to='/auth' />}
       {isLoading || isSessionLoading ? (
         <div>Loading...</div>
       ) : (
@@ -93,14 +85,14 @@ export const Room = memo(() => {
             <Paper className='room-qr-wrapper'>
               {state.sessionId ? (
                 <QRCodeSVG
-                  value={`http://localhost:8000/room?session_id=${state.sessionId}`}
+                  value={`${window.location.href}?session_id=${state.sessionId}`}
                   className='room-qr'
                 />
               ) : (
                 <p>Не удалось создать комнату</p>
               )}
             </Paper>
-            {state.user.isAdmin ? (
+            {state.user?.isAdmin ? (
               <Button
                 variant='contained'
                 endIcon={<ArrowForwardIosIcon />}
@@ -114,7 +106,11 @@ export const Room = memo(() => {
               <p className='room-user-counter'>Ожидайте старта игры..</p>
             )}
           </div>
-          <p className='room-user-counter'>{`Подключились ${users.length} человек(а)`}</p>
+          {users?.length === 0 ? (
+            <p className='room-user-counter'>Ожидание подключения игроков...</p>
+          ) : (
+            <p className='room-user-counter'>{`Присоединились ${users.length} человек(а)`}</p>
+          )}
           <Glass className='room-user-avatars'>
             <AvatarsStack users={users} />
           </Glass>

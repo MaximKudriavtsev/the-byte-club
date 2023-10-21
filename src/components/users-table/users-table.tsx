@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { usePageContext } from '../../store/context/page-context';
 
 const getPlace = (index: number) => {
   if (index === 1) return '🥇';
@@ -14,21 +15,11 @@ const getPlace = (index: number) => {
   return index;
 };
 
-function createData(name: string, time: number, score: number) {
-  return { name, time, score };
-}
-
-const rows = [
-  createData('Юля', 159, 1540),
-  createData('Ваня', 237, 1200),
-  createData('Татьяна', 262, 1120),
-  createData('Василий', 305, 800),
-  createData('Владимир', 356, 450),
-  createData('Ольга', 356, 450),
-  createData('Николай', 356, 450),
-];
-
 export const UsersTable = () => {
+  const { state } = usePageContext();
+
+  const rows = state.table || [];
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>

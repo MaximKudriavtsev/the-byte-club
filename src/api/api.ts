@@ -5,7 +5,7 @@ export type Api = {
    * POST: авторизация пользователя, передаем только имя
    * @returns Возвращает пользователя с id
    */
-  authUser: (userName: string) => Promise<User>;
+  authUser: (userName: string, sessionId?: number) => Promise<User>;
   /**
    * GET: Возвращает список доступных квизов
    * Используем query params skip & take для пейджирования
@@ -58,5 +58,15 @@ export type Api = {
     questionId: number,
     varianId: number,
     userId: number,
+    delta: number,
   ) => Promise<{ rightVariantId: number }>;
+  /**
+   * POST: Отправка события для включения следующего вопроса внутри сессии
+   * Отправляем со стороны админа сессии
+   */
+  switchQuestion: (sessionId: number) => Promise<void>;
+  /**
+   * Сохраниение новой структуры квиза
+   */
+  createQuiz: (quiz: Quiz) => Promise<void>;
 };

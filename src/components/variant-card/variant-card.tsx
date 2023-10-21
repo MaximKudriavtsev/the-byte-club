@@ -6,6 +6,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 
 interface VariantCardProps {
+  id: number;
   variant: Variant;
   reveal: boolean;
   isRight?: boolean;
@@ -16,6 +17,7 @@ interface VariantCardProps {
 }
 
 const VariantCard: FC<VariantCardProps> = ({
+  id,
   variant,
   number,
   reveal,
@@ -31,6 +33,7 @@ const VariantCard: FC<VariantCardProps> = ({
     Selected,
     Correct,
     Wrong,
+    Normal,
   }
 
   const styleVariant = (type: VariantType) => {
@@ -67,6 +70,10 @@ const VariantCard: FC<VariantCardProps> = ({
       }
     }
   }, [isRight, isSelected, reveal]);
+
+  useEffect(() => {
+    styleVariant(VariantType.Normal);
+  }, [id]);
 
   return (
     <Paper className={`variant-card-button-wrapper ${cardStyle}`}>
