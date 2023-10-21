@@ -36,9 +36,7 @@ const Question: FC = memo(() => {
     }
 
     if (currentQuestionId === null) {
-      setTimeout(() => {
-        navigate('/rating');
-      }, 1500);
+      navigate('/rating');
     }
   }, [currentQuestionId]);
 

@@ -32,6 +32,11 @@ export const Room = memo(() => {
     onSuccess: () => {
       setTimeout(() => {
         navigate('/question');
+        // if (state.user.isAdmin) {
+        //   navigate('/rating');
+        // } else {
+        //   navigate('/question');
+        // }
       }, 500);
     },
   });
@@ -51,10 +56,14 @@ export const Room = memo(() => {
   }, [quiz]);
 
   useEffect(() => {
-    if (state.currentQuestionId) {
-      navigate('/question');
+    if (state.currentQuestionId && !state.user.isAdmin) {
+      if (state.user.isAdmin) {
+        navigate('/rating');
+      } else {
+        navigate('/question');
+      }
     }
-  }, [state.currentQuestionId]);
+  }, [state.currentQuestionId, state.user]);
 
   useEffect(() => {
     if (!state.sessionId) {
