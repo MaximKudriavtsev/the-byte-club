@@ -1,20 +1,24 @@
-import React, {FC, useState} from 'react';
+import React, { FC, useState } from 'react';
 import Paper from '@mui/material/Paper';
+import { cloneDeep } from 'lodash';
+import { Grid, TextField, Typography } from '@mui/material';
+
+import { SwitchRightVariant } from './switch-right-variant/switch-right-variant';
+import { VariantAnswer } from './variant-answer/variant-answer';
+import { Question } from '../../api/types';
 
 import './new-question-card.scss';
-import {Grid, TextField, Typography} from "@mui/material";
-
-import {SwitchRightVariant} from './switch-right-variant/switch-right-variant';
-import {VariantAnswer} from './variant-answer/variant-answer';
-import {Question} from "../../api/types";
-import { cloneDeep } from 'lodash';
 
 interface NewQuestionCardProps {
   setQuizQuestion: (prevState: (prevState: any) => any) => void;
   currentIndex: number;
   quizQuestions: Question[];
 }
-const NewQuestionCard: FC<NewQuestionCardProps> = ({setQuizQuestion, currentIndex, quizQuestions}) => {
+const NewQuestionCard: FC<NewQuestionCardProps> = ({
+  setQuizQuestion,
+  currentIndex,
+  quizQuestions,
+}) => {
   const [newQuizQuestion, setNewQuizQuestion] = useState('');
 
   const currentQuestion = quizQuestions[currentIndex];
@@ -29,44 +33,45 @@ const NewQuestionCard: FC<NewQuestionCardProps> = ({setQuizQuestion, currentInde
           value={currentQuestion.title || newQuizQuestion}
           onChange={e => {
             setNewQuizQuestion(e.target.value);
-            setQuizQuestion((prevState) => {
+            setQuizQuestion(prevState => {
               const nextState = cloneDeep(prevState);
               nextState[currentIndex].title = e.target.value;
               return nextState;
-            })
+            });
           }}
         />
       </div>
       <div>
         <Grid container spacing={2}>
           <Grid item xs={10}>
-            {[0, 1, 2, 3].map((index) => (
+            {[0, 1, 2, 3].map(index => (
               <VariantAnswer
                 key={index}
                 value={currentQuestion.variants[index]?.text || ''}
                 onChange={(value: any) => {
-                  setQuizQuestion((prevState) => {
+                  setQuizQuestion(prevState => {
                     const nextState = cloneDeep(prevState);
                     nextState[currentIndex].variants[index].text = value;
                     return nextState;
-                  })
+                  });
                 }}
               />
             ))}
           </Grid>
-          <Grid item xs={2}>{[0, 1, 2, 3].map((index) => (
-            <SwitchRightVariant
-              key={index}
-              value={currentQuestion.variants[index]?.isRight || false}
-              onChange={(value: any) => {
-                setQuizQuestion((prevState) => {
-                  const nextState = cloneDeep(prevState);
-                  nextState[currentIndex].variants[index].isRight = value;
-                  return nextState;
-                })
-              }}
-            />
-          ))}
+          <Grid item xs={2}>
+            {[0, 1, 2, 3].map(index => (
+              <SwitchRightVariant
+                key={index}
+                value={currentQuestion.variants[index]?.isRight || false}
+                onChange={(value: any) => {
+                  setQuizQuestion(prevState => {
+                    const nextState = cloneDeep(prevState);
+                    nextState[currentIndex].variants[index].isRight = value;
+                    return nextState;
+                  });
+                }}
+              />
+            ))}
           </Grid>
         </Grid>
       </div>
