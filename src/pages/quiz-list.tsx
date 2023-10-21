@@ -12,7 +12,7 @@ export const QuizList = memo(() => {
   const { state } = usePageContext();
   const { data, isLoading } = useQuery('list', getList);
   return (
-    <Layout>
+    <Layout header={<h1>Выбери квиз</h1>}>
       {state.user === null && <Navigate to='/auth' />}
       {isLoading ? (
         <div>Loading...</div>

@@ -8,6 +8,7 @@ import { Layout } from '../components/layout';
 import { TextField, Typography } from '@mui/material';
 
 import './auth.scss';
+import { Glass } from '../components/glass/glass';
 
 export const Auth = memo(() => {
   const navigate = useNavigate();
@@ -29,45 +30,43 @@ export const Auth = memo(() => {
 
   return (
     <Layout>
-      <div className='auth'>
-        <Typography variant='h2' component='h2' align='center'>
-          Привет!
-        </Typography>
+      <Glass className='auth'>
+        <div className='auth-content auth-text-wrapper'>
+          <Typography className='auth-text ' variant='h2' component='h2' align='center'>
+            Привет!
+          </Typography>
 
-        <br />
+          <br />
+        </div>
+        <div className='auth-content auth-inputs-wrapper'>
+          <Typography variant='h6' component='h6' align='left'>
+            Давай знакомиться
+          </Typography>
+          <br />
+          <TextField
+            fullWidth
+            placeholder='Введи своё имя'
+            variant='outlined'
+            value={localUserName}
+            onChange={e => {
+              setLocalUserName(e.target.value);
+            }}
+          />
 
-        <Typography variant='h4' component='h4' align='center'>
-          Давай знакомиться
-        </Typography>
+          <br />
+          <br />
 
-        <br />
-        <br />
-        <br />
-
-        <TextField
-          fullWidth
-          placeholder='Введи своё имя'
-          variant='outlined'
-          value={localUserName}
-          onChange={e => {
-            setLocalUserName(e.target.value);
-          }}
-        />
-
-        <br />
-        <br />
-        <br />
-
-        <LoadingButton
-          fullWidth
-          variant='contained'
-          disabled={!localUserName}
-          loading={isLoading}
-          onClick={() => sendUserData()}
-        >
-          Начать!
-        </LoadingButton>
-      </div>
+          <LoadingButton
+            fullWidth
+            variant='contained'
+            disabled={!localUserName}
+            loading={isLoading}
+            onClick={() => sendUserData()}
+          >
+            Начать!
+          </LoadingButton>
+        </div>
+      </Glass>
     </Layout>
   );
 });

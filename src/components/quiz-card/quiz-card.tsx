@@ -13,6 +13,7 @@ import { ActionType, usePageContext } from '../../store/context/page-context';
 import { useNavigate } from 'react-router-dom';
 
 import './quiz-card.scss';
+import { Glass } from '../glass/glass';
 
 interface QuizCardProps {
   user: User;
@@ -33,7 +34,7 @@ const QuizCard: FC<QuizCardProps> = ({ quiz, user }) => {
   }, [data]);
 
   return (
-    <Paper className='quiz-card-wrapper'>
+    <Glass className='quiz-card-wrapper'>
       <h3> {quiz.title}</h3>
       <div className='quiz-card-button-wrapper'>
         {user.isAdmin ? (
@@ -56,7 +57,7 @@ const QuizCard: FC<QuizCardProps> = ({ quiz, user }) => {
           </Button>
         )}
       </div>
-    </Paper>
+    </Glass>
   );
 };
 

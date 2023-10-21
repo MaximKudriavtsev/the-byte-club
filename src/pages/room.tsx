@@ -14,6 +14,7 @@ import { Navigate } from 'react-router-dom';
 import { ActionType, usePageContext } from '../store/context/page-context';
 import { useSocket } from '../socket-service/socket-hook';
 import { useNavigate } from 'react-router-dom';
+import { Glass } from '../components/glass/glass';
 
 const users: User[] = [
   {
@@ -82,14 +83,13 @@ export const Room = memo(() => {
   }, [state.sessionId]);
 
   return (
-    <Layout>
+    <Layout header={<h2>{quiz?.title}</h2>}>
       {state.user === null && <Navigate to='/auth' />}
       {isLoading || isSessionLoading ? (
         <div>Loading...</div>
       ) : (
         <>
           <div className='room-wrapper'>
-            <h2>{quiz?.title}</h2>
             <Paper className='room-qr-wrapper'>
               {state.sessionId ? (
                 <QRCodeSVG
@@ -115,7 +115,9 @@ export const Room = memo(() => {
             )}
           </div>
           <p className='room-user-counter'>{`Подключились ${users.length} человек(а)`}</p>
-          <AvatarsStack users={users} className='room-user-avatars' />
+          <Glass className='room-user-avatars'>
+            <AvatarsStack users={users} />
+          </Glass>
         </>
       )}
     </Layout>
