@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Layout } from '../components/layout';
 import { Paper } from '@mui/material';
@@ -6,45 +6,61 @@ import { User } from '../api/types';
 import { AvatarsStack } from '../components/icons-stack/avatars-stack';
 import Button from '@mui/material/Button';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import productionApi from '../api/production';
 
 import './room.scss';
+import { Navigate } from 'react-router-dom';
+import { ActionType, usePageContext } from '../store/context/page-context';
 
-export const Room = () => {
+const users: User[] = [
+  {
+    id: 1,
+    name: 'DmitryMorozov',
+    isAdmin: true,
+  },
+  {
+    id: 2,
+    name: 'Max Kudr',
+    isAdmin: true,
+    image:
+      'https://sun37-1.userapi.com/impg/3mge_x8OKZTJswN8w7XtPNxMuXYD7kabKtWzJQ/OEpwQcDow30.jpg?size=1439x2160&quality=96&sign=c4ab44275b5938d08f3ebc8f10cec423&type=album',
+  },
+  {
+    id: 3,
+    name: 'Tony Strap',
+    isAdmin: true,
+  },
+  {
+    id: 4,
+    name: 'Dany Sydr',
+    isAdmin: true,
+  },
+];
+
+export const Room = memo(() => {
+  const { state, dispatch } = usePageContext();
   const { data: quiz, isLoading } = useQuery('quiz-id-1', () => productionApi.getQuiz(1));
 
-  const users: User[] = [
-    {
-      id: 1,
-      name: 'DmitryMorozov',
-      isAdmin: true,
-    },
-    {
-      id: 2,
-      name: 'Max Kudr',
-      isAdmin: true,
-      image:
-        'https://sun37-1.userapi.com/impg/3mge_x8OKZTJswN8w7XtPNxMuXYD7kabKtWzJQ/OEpwQcDow30.jpg?size=1439x2160&quality=96&sign=c4ab44275b5938d08f3ebc8f10cec423&type=album',
-    },
-    {
-      id: 3,
-      name: 'Tony Strap',
-      isAdmin: true,
-    },
-    {
-      id: 4,
-      name: 'Dany Sydr',
-      isAdmin: true,
-    },
-  ];
+  const { mutate } = useMutation(() => productionApi.startQuizSession(state.sessionId || 0));
 
   const runQuiz = () => {
-    console.log(`Run quiz ${quiz?.id}`);
+    if (state.sessionId !== undefined && state.sessionId !== null) {
+      mutate();
+
+      // TODO: Должны запускать ws соединение
+    }
   };
+
+  useEffect(() => {
+    if (quiz) {
+      dispatch({ type: ActionType.SET_QUIZ, payload: quiz });
+    }
+  }, [quiz]);
 
   return (
     <Layout>
+      {state.user === null && <Navigate to='/auth' />}
       {isLoading ? (
         <div>Loading...</div>
       ) : (
@@ -70,4 +86,4 @@ export const Room = () => {
       )}
     </Layout>
   );
-};
+});

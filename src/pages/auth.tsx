@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { useMutation } from 'react-query';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { TextField, Typography } from '@mui/material';
 
 import './auth.scss';
 
-export const Auth = () => {
+export const Auth = memo(() => {
   const navigate = useNavigate();
   const [localUserName, setLocalUserName] = useState('');
   const { dispatch } = usePageContext();
@@ -70,4 +70,4 @@ export const Auth = () => {
       </div>
     </Layout>
   );
-};
+});

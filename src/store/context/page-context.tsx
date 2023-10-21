@@ -1,13 +1,20 @@
 import React, { FC, ReactNode, useContext, useReducer } from 'react';
 import Cookie from 'js-cookie';
+import { Quiz } from '../../api/types';
 
 type ContextType = {
   state: State;
   dispatch: React.Dispatch<Action>;
 };
 
+const initialState: State = {
+  user: Cookie.get('name') || null,
+  quiz: null,
+  sessionId: null,
+};
+
 export const PageContext = React.createContext<ContextType>({
-  state: { user: null },
+  state: initialState,
   dispatch: ({ type, payload }) => {},
 });
 
@@ -18,6 +25,8 @@ export const usePageContext = () => {
 
 export enum ActionType {
   SET_USER = 'SET_USER',
+  SET_SESSION_ID = 'SET_SESSION_ID',
+  SET_QUIZ = 'SET_QUIZ',
 }
 
 type Action = {
@@ -27,6 +36,8 @@ type Action = {
 
 type State = {
   user: any;
+  sessionId: number | null;
+  quiz: Quiz | null;
 };
 
 const reducer = (state: State, action: Action) => {
@@ -36,6 +47,18 @@ const reducer = (state: State, action: Action) => {
       return {
         ...state,
         user: action.payload,
+      };
+    }
+    case ActionType.SET_SESSION_ID: {
+      return {
+        ...state,
+        sessionId: action.payload,
+      };
+    }
+    case ActionType.SET_QUIZ: {
+      return {
+        ...state,
+        quiz: action.payload,
       };
     }
     default: {
@@ -49,7 +72,7 @@ type Props = {
 };
 
 export const PageContextProvider: FC<Props> = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, { user: Cookie.get('name') || null });
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return <PageContext.Provider value={{ state, dispatch }}>{children}</PageContext.Provider>;
 };

@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, memo } from 'react';
 import { Question, Variant } from '../api/types';
 import { Paper } from '@mui/material';
 import { Grid } from '@mui/material';
@@ -9,7 +9,7 @@ import './question.scss';
 import { Countdown } from '../components/countdown/countdown';
 interface QuestionProps {}
 
-const Question: FC<QuestionProps> = () => {
+const Question: FC<QuestionProps> = memo(() => {
   const variants: Variant[] = [
     {
       id: 1,
@@ -94,6 +94,6 @@ const Question: FC<QuestionProps> = () => {
       </Grid>
     </Layout>
   );
-};
+});
 
 export { Question };
