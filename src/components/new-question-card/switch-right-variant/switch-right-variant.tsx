@@ -1,25 +1,15 @@
-import React, {FC, useState} from 'react';
+import React, { FC, useState } from 'react';
 
-import Switch from "@mui/material/Switch";
+import Switch from '@mui/material/Switch';
 
 interface SwitchRightVariantProps {
   value: any;
   onChange: any;
 }
 
-const SwitchRightVariant: FC<SwitchRightVariantProps> = ({value, onChange}) => {
-  const [rightVariant, setRightVariant] = useState(false);
-
-  const changeRightVariant = () => {
-    setRightVariant(!rightVariant);
-  };
-
+const SwitchRightVariant: FC<SwitchRightVariantProps> = ({ value, onChange }) => {
   return (
-    <Switch
-      className='new-question-card-variant-switch'
-      checked={rightVariant}
-      onChange={changeRightVariant}
-    />
+    <Switch className='new-question-card-variant-switch' checked={value} onChange={onChange} />
   );
 };
 

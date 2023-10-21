@@ -3,13 +3,13 @@ import { useQuery } from 'react-query';
 import productionApi from '../api/production';
 import { ActionType, usePageContext } from '../store/context/page-context';
 import { Layout } from '../components/layout';
-import Paper from "@mui/material/Paper";
-import {Grid, TextField, Typography} from '@mui/material';
-import Button from "@mui/material/Button";
+import Paper from '@mui/material/Paper';
+import { Grid, TextField, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
 
 import './create-quiz.scss';
-import {Question} from "../api/types";
-import {NewQuestionCard} from "../components/new-question-card/new-question-card";
+import { Question } from '../api/types';
+import { NewQuestionCard } from '../components/new-question-card/new-question-card';
 
 export const CreateQuiz = () => {
   const [localUser] = useState('');
@@ -17,7 +17,7 @@ export const CreateQuiz = () => {
   const { data: user } = useQuery('auth', () => productionApi.authUser(localUser));
 
   const [quizTitle, setQuizTitle] = useState('');
-  const [quizQuestions, setQuizQuestion] = useState<Question[]>([]);
+  const [quizQuestions, setQuizQuestions] = useState<Question[]>([]);
 
   useEffect(() => {
     if (user) {
@@ -31,14 +31,19 @@ export const CreateQuiz = () => {
     let newQuizQuestion = {
       id: currentId,
       quizId: 0,
-      variants: [],
+      variants: Array.from({ length: 4 }).map(() => ({
+        id: 0,
+        questionId: 0,
+        isRight: false,
+        text: '',
+      })),
       time: 10,
       title: 'Введите вопрос',
       value: 1,
-    }
+    };
 
-    setQuizQuestion((prevQuizQuestions) => {
-        return [...quizQuestions, newQuizQuestion]
+    setQuizQuestions(prevQuizQuestions => {
+      return [...prevQuizQuestions, newQuizQuestion];
     });
   };
 
@@ -47,7 +52,7 @@ export const CreateQuiz = () => {
       id: 0,
       questions: quizQuestions,
       title: quizTitle,
-    }
+    };
 
     console.log(`Save new quiz`, newQuiz);
   };
@@ -73,27 +78,23 @@ export const CreateQuiz = () => {
             </Paper>
 
             {quizQuestions.map((question, index) => (
-              <NewQuestionCard key={question.id + question.title} setQuizQuestion={setQuizQuestion} quizQuestions={quizQuestions} currentIndex={index}/>
+              <NewQuestionCard
+                key={index.toString()}
+                setQuizQuestions={setQuizQuestions}
+                quizQuestions={quizQuestions}
+                currentIndex={index}
+              />
             ))}
-
           </Grid>
           <Grid item xs={2}>
             <Paper elevation={3} className='create-quiz-controls'>
               <div className='create-quiz-controls-add'>
-                <Button
-                  variant='contained'
-                  onClick={() => addNewQuestion()}
-                  size='small'
-                >
+                <Button variant='contained' onClick={() => addNewQuestion()} size='small'>
                   +
                 </Button>
               </div>
               <div className='create-quiz-controls-save'>
-                <Button
-                  variant='contained'
-                  onClick={() => saveNewQuiz()}
-                  size='small'
-                >
+                <Button variant='contained' onClick={() => saveNewQuiz()} size='small'>
                   ✓
                 </Button>
               </div>

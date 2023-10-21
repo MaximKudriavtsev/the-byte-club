@@ -10,12 +10,12 @@ import { Question } from '../../api/types';
 import './new-question-card.scss';
 
 interface NewQuestionCardProps {
-  setQuizQuestion: (prevState: (prevState: any) => any) => void;
+  setQuizQuestions: React.Dispatch<React.SetStateAction<Question[]>>;
   currentIndex: number;
   quizQuestions: Question[];
 }
 const NewQuestionCard: FC<NewQuestionCardProps> = ({
-  setQuizQuestion,
+  setQuizQuestions,
   currentIndex,
   quizQuestions,
 }) => {
@@ -33,7 +33,7 @@ const NewQuestionCard: FC<NewQuestionCardProps> = ({
           value={currentQuestion.title || newQuizQuestion}
           onChange={e => {
             setNewQuizQuestion(e.target.value);
-            setQuizQuestion(prevState => {
+            setQuizQuestions(prevState => {
               const nextState = cloneDeep(prevState);
               nextState[currentIndex].title = e.target.value;
               return nextState;
@@ -49,7 +49,7 @@ const NewQuestionCard: FC<NewQuestionCardProps> = ({
                 key={index}
                 value={currentQuestion.variants[index]?.text || ''}
                 onChange={(value: any) => {
-                  setQuizQuestion(prevState => {
+                  setQuizQuestions(prevState => {
                     const nextState = cloneDeep(prevState);
                     nextState[currentIndex].variants[index].text = value;
                     return nextState;
@@ -63,11 +63,28 @@ const NewQuestionCard: FC<NewQuestionCardProps> = ({
               <SwitchRightVariant
                 key={index}
                 value={currentQuestion.variants[index]?.isRight || false}
-                onChange={(value: any) => {
-                  setQuizQuestion(prevState => {
-                    const nextState = cloneDeep(prevState);
-                    nextState[currentIndex].variants[index].isRight = value;
-                    return nextState;
+                onChange={(event: any) => {
+                  debugger;
+                  const value = event.target.checked;
+
+                  setQuizQuestions(prevState => {
+                    const prevValue = prevState[currentIndex].variants[index].isRight;
+                    debugger;
+                    if (
+                      prevState[currentIndex].variants.reduce(
+                        (acc, item) => (item.isRight ? (acc += 1) : acc),
+                        0,
+                      ) < 1 ||
+                      (!value && prevValue)
+                    ) {
+                      const nextState = cloneDeep(prevState);
+
+                      const nextValue = value;
+
+                      nextState[currentIndex].variants[index].isRight = nextValue;
+                      return nextState;
+                    }
+                    return prevState;
                   });
                 }}
               />
