@@ -20,11 +20,14 @@ import { Question } from './pages/question';
 const muiTheme = createTheme({
   palette: {
     primary: {
-      main: '#006ee6',
+      main: '#04b3eb',
+      contrastText: '#fff',
     },
     secondary: {
-      main: '#0060d0',
+      main: '#04b3eb',
+      contrastText: '#fff',
     },
+
     warning: {
       main: '#ff3b30',
     },

@@ -1,0 +1,97 @@
+@import '/src/media.scss';
+
+.layout {
+  margin-top: 70px;
+  display: flex;
+  overflow: scroll;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &-header {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  &-content {
+    z-index: 2;
+  }
+
+  &-logo {
+    height: 70px;
+    width: auto;
+    margin-left: 10px;
+    &-wrapper {
+      position: fixed;
+      top: 0;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: flex-start;
+    }
+  }
+}
+
+.fancy-border {
+  position: absolute;
+  background: #04b3eb;
+  background: -webkit-linear-gradient(to right, #04b3eb, #56ea8a);
+  background: linear-gradient(to right, #56ea8a, #04b3eb);
+
+  &-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+
+    overflow: hidden;
+  }
+
+  &-radius-1 {
+    border-radius: 30% 70% 30% 70% / 43% 70% 30% 57%;
+    top: 240px;
+    left: -200px;
+    width: 400px;
+    height: 800px;
+
+    @include phoneTablet {
+      left: -100px;
+      width: 250px;
+      height: 500px;
+    }
+  }
+
+  &-radius-2 {
+    border-radius: 30% 70% 30% 70% / 43% 70% 30% 57%;
+    bottom: -120px;
+    right: 0;
+    width: 500px;
+    height: 200px;
+
+    @include phoneTablet {
+      bottom: -50px;
+      width: 200px;
+    }
+  }
+
+  &-radius-3 {
+    border-radius: 30% 70% 30% 70% / 43% 70% 30% 57%;
+    width: 500px;
+    height: 600px;
+    top: -200px;
+    right: -100px;
+
+    @include phoneTablet {
+      top: -50px;
+      right: -30px;
+      width: 150px;
+      height: 200px;
+    }
+  }
+}

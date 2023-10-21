@@ -2,7 +2,6 @@ import React, { memo, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Layout } from '../components/layout';
 import { Paper } from '@mui/material';
-import { User } from '../api/types';
 import { AvatarsStack } from '../components/avatars-stack/avatars-stack';
 import Button from '@mui/material/Button';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -13,6 +12,7 @@ import './room.scss';
 import { useNavigate } from 'react-router-dom';
 import { ActionType, usePageContext } from '../store/context/page-context';
 import { useSocket } from '../socket-service/socket-hook';
+import { Glass } from '../components/glass/glass';
 
 export const Room = memo(() => {
   const navigate = useNavigate();
@@ -85,13 +85,12 @@ export const Room = memo(() => {
   }));
 
   return (
-    <Layout>
+    <Layout header={<h2>{quiz?.title}</h2>}>
       {isLoading || isSessionLoading ? (
         <div>Loading...</div>
       ) : (
         <>
           <div className='room-wrapper'>
-            <h2>{quiz?.title}</h2>
             <Paper className='room-qr-wrapper'>
               {state.sessionId ? (
                 <QRCodeSVG
@@ -121,7 +120,9 @@ export const Room = memo(() => {
           ) : (
             <p className='room-user-counter'>{`Присоединились ${users.length} человек(а)`}</p>
           )}
-          <AvatarsStack users={users} className='room-user-avatars' />
+          <Glass className='room-user-avatars'>
+            <AvatarsStack users={users} />
+          </Glass>
         </>
       )}
     </Layout>
