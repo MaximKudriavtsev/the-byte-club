@@ -126,7 +126,15 @@ export const Room = memo(() => {
             )}
           </div>
           <p className='room-user-counter'>{`Подключились ${users.length} человек(а)`}</p>
-          <AvatarsStack users={users} className='room-user-avatars' />
+          <AvatarsStack
+            users={state.table.map(row => ({
+              id: row.userId,
+              name: row.name,
+              image: '',
+              isAdmin: false,
+            }))}
+            className='room-user-avatars'
+          />
         </>
       )}
     </Layout>
