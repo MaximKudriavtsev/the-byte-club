@@ -18,7 +18,7 @@ export const Auth = memo(() => {
     data: user,
     isLoading,
     mutate: sendUserData,
-  } = useMutation(() => productionApi.authUser(localUserName));
+  } = useMutation(() => productionApi.authUser(localUserName, state?.sessionId || undefined));
 
   useEffect(() => {
     if (user) {

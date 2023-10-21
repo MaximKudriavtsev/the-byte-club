@@ -5,7 +5,7 @@ export type Api = {
    * POST: авторизация пользователя, передаем только имя
    * @returns Возвращает пользователя с id
    */
-  authUser: (userName: string) => Promise<User>;
+  authUser: (userName: string, sessionId?: number) => Promise<User>;
   /**
    * GET: Возвращает список доступных квизов
    * Используем query params skip & take для пейджирования

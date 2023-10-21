@@ -8,10 +8,10 @@ const REMOTE_HOST = 'http://80.78.207.182:8000';
 const URL = process.env.MODE === 'production' ? '/api' : `${REMOTE_HOST}/api`;
 
 export const productionApi: Api = {
-  authUser: name => {
+  authUser: (name, sessionId) => {
     return fetch(`${URL}/auth`, {
       method: 'POST',
-      body: JSON.stringify({ name }),
+      body: JSON.stringify({ name, sessionId }),
       headers: {
         'Content-Type': 'application/json',
       },
