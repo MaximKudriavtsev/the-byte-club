@@ -53,15 +53,22 @@ export const Room = memo(() => {
     { enabled: !!session?.quizId },
   );
 
-  const { mutate } = useMutation(() => productionApi.startQuizSession(state.sessionId || 0));
+  const { mutate, isLoading: isStartSessionLoading } = useMutation(
+    () => productionApi.startQuizSession(state.sessionId || 0),
+    {
+      onSuccess: () => {
+        setTimeout(() => {
+          navigate('/question');
+        }, 500);
+      },
+    },
+  );
 
   useSocket(state.sessionId);
 
   const runQuiz = () => {
     if (state.sessionId !== undefined && state.sessionId !== null) {
       mutate();
-      navigate('/question');
-      // TODO: Должны запускать ws соединение
     }
   };
 
