@@ -104,7 +104,7 @@ export const Room = memo(() => {
             <Paper className='room-qr-wrapper'>
               {state.sessionId ? (
                 <QRCodeSVG
-                  value={`http://localhost:8000/room?session_id=${state.sessionId}`}
+                  value={`${window.location.href}?session_id=${state.sessionId}`}
                   className='room-qr'
                 />
               ) : (
