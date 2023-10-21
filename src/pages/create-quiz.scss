@@ -16,6 +16,10 @@
     &-set-description{
       padding: 10px;
     }
+
+    &-new-question{
+      margin-bottom: 15px;
+    }
   }
 
   &-controls{
@@ -31,12 +35,5 @@
     &-save{
       margin-bottom: 20px;
     }
-  }
-
-  @include tablet {
-
-  }
-  @include phone {
-
   }
 }

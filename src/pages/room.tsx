@@ -3,7 +3,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { Layout } from '../components/layout';
 import { Paper } from '@mui/material';
 import { User } from '../api/types';
-import { AvatarsStack } from '../components/icons-stack/avatars-stack';
+import { AvatarsStack } from '../components/avatars-stack/avatars-stack';
 import Button from '@mui/material/Button';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useMutation, useQuery } from 'react-query';
@@ -40,9 +40,18 @@ const users: User[] = [
 ];
 
 export const Room = memo(() => {
-  const { state, dispatch } = usePageContext();
   const navigate = useNavigate();
-  const { data: quiz, isLoading } = useQuery('quiz-id-1', () => productionApi.getQuiz(1));
+  const { state, dispatch } = usePageContext();
+  const { data: session, isLoading: isSessionLoading } = useQuery(
+    'session',
+    () => productionApi.getQuizSession(state.sessionId || 0),
+    { enabled: !!state.sessionId },
+  );
+  const { data: quiz, isLoading } = useQuery(
+    'quiz-id-1',
+    () => productionApi.getQuiz(session?.quizId || 0),
+    { enabled: !!session?.quizId },
+  );
 
   const { mutate } = useMutation(() => productionApi.startQuizSession(state.sessionId || 0));
 
@@ -51,7 +60,7 @@ export const Room = memo(() => {
   const runQuiz = () => {
     if (state.sessionId !== undefined && state.sessionId !== null) {
       mutate();
-
+      navigate('/question');
       // TODO: Должны запускать ws соединение
     }
   };
@@ -68,27 +77,47 @@ export const Room = memo(() => {
     }
   }, [state.currentQuestionId]);
 
+  useEffect(() => {
+    if (!state.sessionId) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const sessionId = urlParams.get('session_id') || 0;
+      dispatch({ type: ActionType.SET_SESSION_ID, payload: +sessionId });
+      return;
+    }
+  }, [state.sessionId]);
+
   return (
     <Layout>
       {state.user === null && <Navigate to='/auth' />}
-      {isLoading ? (
+      {isLoading || isSessionLoading ? (
         <div>Loading...</div>
       ) : (
         <>
           <div className='room-wrapper'>
             <h2>{quiz?.title}</h2>
             <Paper className='room-qr-wrapper'>
-              <QRCodeSVG value='https://vk.com/id30412729/' className='room-qr' />
+              {state.sessionId ? (
+                <QRCodeSVG
+                  value={`http://localhost:8000/room?session_id=${state.sessionId}`}
+                  className='room-qr'
+                />
+              ) : (
+                <p>Не удалось создать комнату</p>
+              )}
             </Paper>
-            <Button
-              variant='contained'
-              endIcon={<ArrowForwardIosIcon />}
-              onClick={() => runQuiz()}
-              size='large'
-              className='room-start-button'
-            >
-              Начать
-            </Button>
+            {state.user.isAdmin ? (
+              <Button
+                variant='contained'
+                endIcon={<ArrowForwardIosIcon />}
+                onClick={() => runQuiz()}
+                size='large'
+                className='room-start-button'
+              >
+                Начать
+              </Button>
+            ) : (
+              <p className='room-user-counter'>Ожидайте старта игры..</p>
+            )}
           </div>
           <p className='room-user-counter'>{`Подключились ${users.length} человек(а)`}</p>
           <AvatarsStack users={users} className='room-user-avatars' />

@@ -1,4 +1,4 @@
-import { Quiz, User } from './types';
+import { Quiz, Session, User } from './types';
 
 export type Api = {
   /**
@@ -28,6 +28,12 @@ export type Api = {
    * @returns
    */
   createQuizSession: (userId: number, quizId: number) => Promise<{ sessionId: number }>;
+  /**
+   * POST: Получение квиза внутри комнаты
+   *
+   * @returns
+   */
+  getQuizSession: (sessionId: number) => Promise<Session>;
   /**
    * POST: Старт квиза внутри комнаты
    * После этого мы должны подключаться к web sockets
