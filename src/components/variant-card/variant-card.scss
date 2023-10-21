@@ -1,0 +1,49 @@
+.variant-card {
+  &-button {
+    &-wrapper {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+    &-wrapper:hover {
+      transition: filter 0.3s;
+      filter: brightness(96%);
+    }
+    background-color: transparent;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    padding: 0 10px;
+    &-icon {
+      color: white;
+      margin: auto;
+    }
+  }
+  &-button:disabled {
+    color: black;
+  }
+  &-text {
+    width: 100%;
+    word-wrap: break-word;
+    height: auto;
+  }
+
+  &_selected {
+    outline: solid 2px #5bc236;
+  }
+  &_correct {
+    background-color: #5bc236 !important;
+    transition: background-color 0.3s !important;
+  }
+
+  &_wrong {
+    background-color: #ff3b30 !important;
+    transition: background-color 0.3s !important;
+  }
+}
