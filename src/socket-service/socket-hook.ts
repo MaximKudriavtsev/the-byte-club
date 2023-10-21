@@ -3,20 +3,27 @@ import { useEffect } from 'react';
 import { createSocketConnection } from './socket-service';
 
 type Options = {
-  type: 'MESSAGE';
   callBack: (payload: any) => void;
 };
 
 export const useSocket = ({ callBack }: Options) => {
   useEffect(() => {
-    createSocketConnection('');
+    createSocketConnection();
 
-    window.Echo.private('').listen('message', (payload: any) => {
+    // room-{session_id}
+    window.Echo.channel('room').listen('StartQuestion', (payload: any) => {
+      console.log('start question: ', payload);
+      callBack(payload);
+    });
+
+    window.Echo.channel('room').listen('Rating', (payload: any) => {
+      console.log('rating: ', payload);
       callBack(payload);
     });
 
     return () => {
-      window.Echo.leaveChannel(`private...`);
+      // room-{session_id}
+      window.Echo.leaveChannel(`room`);
     };
-  });
+  }, []);
 };

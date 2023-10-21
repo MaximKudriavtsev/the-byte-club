@@ -12,6 +12,7 @@ import productionApi from '../api/production';
 import './room.scss';
 import { Navigate } from 'react-router-dom';
 import { ActionType, usePageContext } from '../store/context/page-context';
+import { useSocket } from '../socket-service/socket-hook';
 
 const users: User[] = [
   {
@@ -43,6 +44,8 @@ export const Room = memo(() => {
   const { data: quiz, isLoading } = useQuery('quiz-id-1', () => productionApi.getQuiz(1));
 
   const { mutate } = useMutation(() => productionApi.startQuizSession(state.sessionId || 0));
+
+  useSocket({ callBack: payload => undefined });
 
   const runQuiz = () => {
     if (state.sessionId !== undefined && state.sessionId !== null) {
