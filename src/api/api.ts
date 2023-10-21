@@ -52,6 +52,7 @@ export type Api = {
     questionId: number,
     varianId: number,
     userId: number,
+    delta: number,
   ) => Promise<{ rightVariantId: number }>;
   /**
    * POST: Отправка события для включения следующего вопроса внутри сессии

@@ -111,10 +111,16 @@ export const productionApi: Api = {
    * POST: Отправка ответа пользователя на конкретный вопрос
    * @returns возвращает id правильного ответа на этот вопрос
    */
-  answerQuestion: (sessionId: number, questionId: number, varianId: number, userId: number) => {
+  answerQuestion: (
+    sessionId: number,
+    questionId: number,
+    variantId: number,
+    userId: number,
+    delta: number,
+  ) => {
     return fetch(`${URL}/session/${sessionId}/answer`, {
       method: 'POST',
-      body: JSON.stringify({ questionId, varianId, userId }),
+      body: JSON.stringify({ questionId, variantId, userId, delta }),
       headers: {
         'Content-Type': 'application/json',
       },
