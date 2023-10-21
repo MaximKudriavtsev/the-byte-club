@@ -12,6 +12,7 @@ import { PageContextProvider, usePageContext } from './store/context/page-contex
 import { QuizList } from './pages/quiz-list';
 import { RatingTable } from './pages/rating-table';
 import { CreateQuiz } from './pages/create-quiz';
+import { GenerateQuiz } from './pages/generate-quiz';
 
 import './index.scss';
 import { Room } from './pages/room';
@@ -49,6 +50,7 @@ const App = () => {
           <Route path='/room' element={<Room />} />
           <Route path='/rating' element={<RatingTable />} />
           <Route path='/create-quiz' element={<CreateQuiz />} />
+          <Route path='/generate-quiz' element={<GenerateQuiz />} />
           <Route path='*' element={<div>hot found</div>} />
         </Routes>
       </PageContextProvider>
