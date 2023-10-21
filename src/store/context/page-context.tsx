@@ -1,6 +1,7 @@
 import React, { FC, ReactNode, useContext, useReducer } from 'react';
 import Cookie from 'js-cookie';
 import { Quiz } from '../../api/types';
+import { getLocalItem, setLocalItem } from './local-storage';
 
 type ContextType = {
   state: State;
@@ -8,7 +9,7 @@ type ContextType = {
 };
 
 const initialState: State = {
-  user: Cookie.get('name') || null,
+  user: getLocalItem('user'),
   quiz: null,
   sessionId: null,
 };
@@ -43,7 +44,7 @@ type State = {
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
     case ActionType.SET_USER: {
-      Cookie.set('user', action.payload);
+      setLocalItem('user', action.payload);
       return {
         ...state,
         user: action.payload,
