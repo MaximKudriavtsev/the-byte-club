@@ -7,15 +7,17 @@ import productionApi from '../api/production';
 import { useQuery } from 'react-query';
 
 export const RatingTable = () => {
-  const { data, isLoading } = useQuery('quiz-id-1', () => productionApi.getQuiz(1));
-
-  console.log('quiz-id-1', data);
-
   return (
     <Layout>
+      <br />
+      <br />
       <Typography variant='h2' component='h2' align='center'>
         Результаты 🎉
       </Typography>
+
+      <br />
+      <br />
+      <br />
 
       <UsersTable />
     </Layout>

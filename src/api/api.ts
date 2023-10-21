@@ -65,4 +65,8 @@ export type Api = {
    * Отправляем со стороны админа сессии
    */
   switchQuestion: (sessionId: number) => Promise<void>;
+  /**
+   * Сохраниение новой структуры квиза
+   */
+  createQuiz: (quiz: Quiz) => Promise<void>;
 };
