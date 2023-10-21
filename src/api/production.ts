@@ -3,7 +3,8 @@ import queryString from 'query-string';
 import { checkIfError, parseToJson, logError, recursiveToCamel } from './utils';
 import { Api } from './api';
 
-const REMOTE_HOST = 'http://51.250.86.225';
+const REMOTE_HOST = 'http://51.250.86.225'; // real prod
+// const REMOTE_HOST = 'http://80.78.207.182:8000';
 const URL = process.env.MODE === 'production' ? '/api' : `${REMOTE_HOST}/api`;
 
 export const productionApi: Api = {
@@ -117,6 +118,19 @@ export const productionApi: Api = {
       headers: {
         'Content-Type': 'application/json',
       },
+    })
+      .then(checkIfError)
+      .then(parseToJson)
+      .then(recursiveToCamel)
+      .catch(logError);
+  },
+  /**
+   * POST: Отправка события для включения следующего вопроса внутри сессии
+   * Отправляем со стороны админа сессии
+   */
+  switchQuestion: (sessionId: number) => {
+    return fetch(`${URL}/session/${sessionId}/switch`, {
+      method: 'POST',
     })
       .then(checkIfError)
       .then(parseToJson)

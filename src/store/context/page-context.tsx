@@ -1,6 +1,5 @@
 import React, { FC, ReactNode, useContext, useReducer } from 'react';
-import Cookie from 'js-cookie';
-import { Quiz } from '../../api/types';
+import { Quiz, RatingTableRow } from '../../api/types';
 import { getLocalItem, setLocalItem } from './local-storage';
 
 type ContextType = {
@@ -12,6 +11,8 @@ const initialState: State = {
   user: getLocalItem('user'),
   quiz: null,
   sessionId: null,
+  currentQuestionId: null,
+  table: [],
 };
 
 export const PageContext = React.createContext<ContextType>({
@@ -28,6 +29,8 @@ export enum ActionType {
   SET_USER = 'SET_USER',
   SET_SESSION_ID = 'SET_SESSION_ID',
   SET_QUIZ = 'SET_QUIZ',
+  SET_TABLE = 'SET_TABLE',
+  SET_CURRENT_QUESTION_ID = 'SET_CURRENT_QUESTION_ID',
 }
 
 type Action = {
@@ -39,9 +42,11 @@ type State = {
   user: any;
   sessionId: number | null;
   quiz: Quiz | null;
+  table: RatingTableRow[];
+  currentQuestionId: number | null;
 };
 
-const reducer = (state: State, action: Action) => {
+const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case ActionType.SET_USER: {
       setLocalItem('user', action.payload);
@@ -60,6 +65,18 @@ const reducer = (state: State, action: Action) => {
       return {
         ...state,
         quiz: action.payload,
+      };
+    }
+    case ActionType.SET_TABLE: {
+      return {
+        ...state,
+        table: action.payload,
+      };
+    }
+    case ActionType.SET_CURRENT_QUESTION_ID: {
+      return {
+        ...state,
+        currentQuestionId: action.payload,
       };
     }
     default: {

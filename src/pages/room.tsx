@@ -45,7 +45,7 @@ export const Room = memo(() => {
 
   const { mutate } = useMutation(() => productionApi.startQuizSession(state.sessionId || 0));
 
-  useSocket({ callBack: payload => undefined });
+  useSocket(state.sessionId);
 
   const runQuiz = () => {
     if (state.sessionId !== undefined && state.sessionId !== null) {

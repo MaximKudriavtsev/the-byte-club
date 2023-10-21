@@ -53,4 +53,9 @@ export type Api = {
     varianId: number,
     userId: number,
   ) => Promise<{ rightVariantId: number }>;
+  /**
+   * POST: Отправка события для включения следующего вопроса внутри сессии
+   * Отправляем со стороны админа сессии
+   */
+  switchQuestion: (sessionId: number) => Promise<void>;
 };
