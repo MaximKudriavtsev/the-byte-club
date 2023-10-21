@@ -43,7 +43,16 @@ const users: User[] = [
 export const Room = memo(() => {
   const navigate = useNavigate();
   const { state, dispatch } = usePageContext();
-  const { data: quiz, isLoading } = useQuery('quiz-id-1', () => productionApi.getQuiz(1));
+  const { data: session, isLoading: isSessionLoading } = useQuery(
+    'session',
+    () => productionApi.getQuizSession(state.sessionId || 0),
+    { enabled: !!state.sessionId },
+  );
+  const { data: quiz, isLoading } = useQuery(
+    'quiz-id-1',
+    () => productionApi.getQuiz(session?.quizId || 0),
+    { enabled: !!session?.quizId },
+  );
 
   const { mutate } = useMutation(() => productionApi.startQuizSession(state.sessionId || 0));
 
@@ -63,17 +72,33 @@ export const Room = memo(() => {
     }
   }, [quiz]);
 
+  useEffect(() => {
+    if (!state.sessionId) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const sessionId = urlParams.get('session_id') || 0;
+      dispatch({ type: ActionType.SET_SESSION_ID, payload: +sessionId });
+      return;
+    }
+  }, [state.sessionId]);
+
   return (
     <Layout>
       {state.user === null && <Navigate to='/auth' />}
-      {isLoading ? (
+      {isLoading || isSessionLoading ? (
         <div>Loading...</div>
       ) : (
         <>
           <div className='room-wrapper'>
             <h2>{quiz?.title}</h2>
             <Paper className='room-qr-wrapper'>
-              <QRCodeSVG value='https://vk.com/id30412729/' className='room-qr' />
+              {state.sessionId ? (
+                <QRCodeSVG
+                  value={`http://localhost:8000/room?session_id=${state.sessionId}`}
+                  className='room-qr'
+                />
+              ) : (
+                <p>Не удалось создать комнату</p>
+              )}
             </Paper>
             {state.user.isAdmin ? (
               <Button

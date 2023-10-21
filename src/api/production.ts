@@ -74,6 +74,20 @@ export const productionApi: Api = {
       .catch(logError);
   },
   /**
+   * POST: Получение квиза внутри комнаты
+   *
+   * @returns
+   */
+  getQuizSession: (sessionId: number) => {
+    return fetch(`${URL}/session/${sessionId}`, {
+      method: 'POST',
+    })
+      .then(checkIfError)
+      .then(parseToJson)
+      .then(recursiveToCamel)
+      .catch(logError);
+  },
+  /**
    * POST: Вступить в сессию квиза
    * @returns возвращает данные пользователя
    */
