@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation } from 'react-query';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { useNavigate } from 'react-router-dom';
 import productionApi from '../api/production';
 import { ActionType, usePageContext } from '../store/context/page-context';
 import { Layout } from '../components/layout';
@@ -9,7 +10,8 @@ import { TextField, Typography } from '@mui/material';
 import './auth.scss';
 
 export const Auth = () => {
-  const [localUserName, setLocalUserName] = useState('');
+  const navigate = useNavigate();
+  const [localUserName, setLocalUserName] = useState(localStorage.getItem('userName') || '');
   const { dispatch } = usePageContext();
 
   const {
@@ -21,6 +23,7 @@ export const Auth = () => {
   useEffect(() => {
     if (user) {
       dispatch({ type: ActionType.SET_USER, payload: user });
+      navigate('/quiz-list');
     }
   }, [user]);
 
@@ -46,7 +49,10 @@ export const Auth = () => {
           placeholder='Введи своё имя'
           variant='outlined'
           value={localUserName}
-          onChange={e => setLocalUserName(e.target.value)}
+          onChange={e => {
+            setLocalUserName(e.target.value);
+            localStorage.setItem('userName', e.target.value);
+          }}
         />
 
         <br />
