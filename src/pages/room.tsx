@@ -1,12 +1,14 @@
 import React, { memo, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Layout } from '../components/layout';
-import { Paper } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import { AvatarsStack } from '../components/avatars-stack/avatars-stack';
 import Button from '@mui/material/Button';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useMutation, useQuery } from 'react-query';
 import productionApi from '../api/production';
+import { useCopyToClipboard } from '@uidotdev/usehooks';
 
 import './room.scss';
 import { useNavigate } from 'react-router-dom';
@@ -37,6 +39,8 @@ export const Room = memo(() => {
   });
 
   useSocket(state.sessionId);
+
+  const [, copyToClipboard] = useCopyToClipboard();
 
   const runQuiz = () => {
     if (state.sessionId !== undefined && state.sessionId !== null) {
@@ -79,8 +83,10 @@ export const Room = memo(() => {
     isAdmin: false,
   }));
 
+  const roomLink = `${window.location.href}?session_id=${state.sessionId}`;
+
   return (
-    <Layout header={<h2>{quiz?.title}</h2>}>
+    <Layout header={<Typography variant='h2'>{quiz?.title}</Typography>}>
       {isLoading || isSessionLoading ? (
         <div>Loading...</div>
       ) : (
@@ -88,27 +94,36 @@ export const Room = memo(() => {
           <div className='room-wrapper'>
             <Paper className='room-qr-wrapper'>
               {state.sessionId ? (
-                <QRCodeSVG
-                  value={`${window.location.href}?session_id=${state.sessionId}`}
-                  className='room-qr'
-                />
+                <QRCodeSVG value={roomLink} className='room-qr' />
               ) : (
                 <p>Не удалось создать комнату</p>
               )}
             </Paper>
             {state.user?.isAdmin ? (
-              <Button
-                variant='contained'
-                endIcon={<ArrowForwardIosIcon />}
-                onClick={() => runQuiz()}
-                size='large'
-                className='room-start-button'
-              >
-                Начать
-              </Button>
+              <>
+                <Button
+                  variant='contained'
+                  endIcon={<ArrowForwardIosIcon />}
+                  onClick={() => runQuiz()}
+                  size='large'
+                  className='room-start-button'
+                >
+                  Начать
+                </Button>
+                <br />
+              </>
             ) : (
               <p className='room-user-counter'>Ожидайте старта игры..</p>
             )}
+            <Button
+              variant='contained'
+              endIcon={<ContentCopyIcon />}
+              onClick={() => copyToClipboard(roomLink)}
+              size='large'
+              className='room-start-button'
+            >
+              Cсылка на комнату
+            </Button>
           </div>
           {users?.length === 0 ? (
             <p className='room-user-counter'>Ожидание подключения игроков...</p>
