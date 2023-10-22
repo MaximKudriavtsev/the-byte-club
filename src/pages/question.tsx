@@ -14,6 +14,8 @@ import { useNavigate } from 'react-router-dom';
 import Confetti from 'react-confetti';
 import { UsersTable } from '../components/users-table/users-table';
 
+import useWindowSize from 'react-use/lib/useWindowSize';
+
 const Question: FC = memo(() => {
   const { state } = usePageContext();
   const navigate = useNavigate();
@@ -87,61 +89,69 @@ const Question: FC = memo(() => {
     }
   };
 
+  const { width, height } = useWindowSize();
+
   return (
     <Layout>
-      <div className='confetti'>
-        <Confetti
-          width={window.screen.width}
-          height={window.screen.height}
-          gravity={0.8}
-          numberOfPieces={100}
-          opacity={isAnswerCorrect ? 1 : 0}
-        />
-      </div>
-
-      <Paper className='question-wrapper'>
-        <div className='question-header'>
-          <p>
-            Вопрос {currentIndex + 1} из {quiz?.questions.length || 10}
-          </p>
-          <Countdown initialTime={question?.time || 0} key={currentQuestionId} />
+      <div className='question'>
+        <div className='confetti'>
+          <Confetti
+            width={width}
+            height={height}
+            gravity={0.8}
+            numberOfPieces={100}
+            opacity={isAnswerCorrect ? 1 : 0}
+          />
         </div>
 
-        <p className='question-title'>{question?.title}</p>
-        {question?.image ? (
-          <img src={question.image} key={currentQuestionId} className='question-image' />
-        ) : null}
-      </Paper>
-
-      <Grid container spacing={2} className='question-variants-wrapper'>
-        {variants?.map((variant, i) => (
-          <Grid item xs={12} sm={6} key={variant.id}>
-            <VariantCard
-              id={variant.id}
-              variant={variant}
-              number={i}
-              reveal={reveal}
-              isRight={variant.isRight}
-              isSelected={variant.id === selectedVariantId}
-              enabled={isVariantsEnabled}
-              onClick={() => {
-                selectVariant(variant.id);
-              }}
-            />
-          </Grid>
-        ))}
-      </Grid>
-
-      {state.user?.isAdmin && (
-        <>
-          {Array.from({ length: 50 }).map((_, index) => (
-            <br key={index.toString()} />
-          ))}
-          <div ref={tableRef}>
-            <UsersTable />
+        <Paper className='question-wrapper'>
+          <div className='question-header'>
+            <p>
+              Вопрос {currentIndex + 1} из {quiz?.questions.length || 10}
+            </p>
+            <Countdown initialTime={question?.time || 0} key={currentQuestionId} />
           </div>
-        </>
-      )}
+
+          <p className='question-title'>{question?.title}</p>
+          {question?.image ? (
+            <img src={question.image} key={currentQuestionId} className='question-image' />
+          ) : null}
+        </Paper>
+
+        <Grid container spacing={2} className='question-variants-wrapper' height={'auto'}>
+          {variants?.map((variant, i) => (
+            <Grid item xs={12} sm={6} key={variant.id}>
+              <VariantCard
+                id={variant.id}
+                variant={variant}
+                number={i}
+                reveal={reveal}
+                isRight={variant.isRight}
+                isSelected={variant.id === selectedVariantId}
+                enabled={isVariantsEnabled}
+                onClick={() => {
+                  selectVariant(variant.id);
+                }}
+              />
+            </Grid>
+          ))}
+        </Grid>
+
+        {state.user?.isAdmin && (
+          <>
+            {Array.from({ length: 50 }).map((_, index) => (
+              <br key={index.toString()} />
+            ))}
+            <div ref={tableRef}>
+              <UsersTable />
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+          </>
+        )}
+      </div>
     </Layout>
   );
 });

@@ -14,8 +14,11 @@ export const QuizList = memo(() => {
   const { state } = usePageContext();
   const { data, isLoading } = useQuery('list', getList);
   return (
-    <Layout header={<Typography variant='h2'>Выбери квиз</Typography>}>
+    <Layout>
       {state.user === null && <Navigate to='/auth' />}
+      <Typography variant='h2' align='center'>
+        Выбери квиз
+      </Typography>
       {isLoading ? (
         <Loader />
       ) : (
