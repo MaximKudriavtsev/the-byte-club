@@ -19,7 +19,7 @@ export function createSocketConnection() {
       cluster: 'mt1',
       wsHost: URL,
       // wsHost: '80.78.207.182', // local
-      // wsHost: '51.250.86.225', // prod
+      //wsHost: '51.250.86.225', // prod
       wsPort: 6001,
       disableStats: true,
       forceTLS: false,

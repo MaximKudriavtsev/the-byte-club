@@ -87,45 +87,47 @@ export const Room = memo(() => {
   const roomLink = `${window.location.href}?session_id=${state.sessionId}`;
 
   return (
-    <Layout header={<Typography variant='h2'>{quiz?.title}</Typography>}>
+    <Layout>
       {isLoading || isSessionLoading ? (
         <Loader />
       ) : (
-        <>
-          <div className='room-wrapper'>
-            <Paper className='room-qr-wrapper'>
-              {state.sessionId ? (
-                <QRCodeSVG value={roomLink} className='room-qr' />
-              ) : (
-                <p>Не удалось создать комнату</p>
-              )}
-            </Paper>
-            {state.user?.isAdmin ? (
-              <>
-                <Button
-                  variant='contained'
-                  endIcon={<ArrowForwardIosIcon />}
-                  onClick={() => runQuiz()}
-                  size='large'
-                  className='room-start-button'
-                >
-                  Начать
-                </Button>
-                <br />
-              </>
+        <div className='room-wrapper'>
+          <Typography variant='h2' align='center'>
+            {quiz?.title}
+          </Typography>
+          <Paper className='room-qr-wrapper'>
+            {state.sessionId ? (
+              <QRCodeSVG value={roomLink} className='room-qr' />
             ) : (
-              <p className='room-user-counter'>Ожидайте старта игры..</p>
+              <p>Не удалось создать комнату</p>
             )}
-            <Button
-              variant='outlined'
-              endIcon={<ContentCopyIcon />}
-              onClick={() => copyToClipboard(roomLink)}
-              size='large'
-              className='room-start-button'
-            >
-              Cсылка на комнату
-            </Button>
-          </div>
+          </Paper>
+          {state.user?.isAdmin ? (
+            <>
+              <Button
+                variant='contained'
+                endIcon={<ArrowForwardIosIcon />}
+                onClick={() => runQuiz()}
+                size='large'
+                className='room-start-button'
+              >
+                Начать
+              </Button>
+              <br />
+            </>
+          ) : (
+            <p className='room-user-counter'>Ожидайте старта игры..</p>
+          )}
+          <Button
+            variant='contained'
+            color='secondary'
+            endIcon={<ContentCopyIcon />}
+            onClick={() => copyToClipboard(roomLink)}
+            size='large'
+            className='room-start-button'
+          >
+            Cсылка на комнату
+          </Button>
           {users?.length === 0 ? (
             <p className='room-user-counter'>Ожидание подключения игроков...</p>
           ) : (
@@ -136,7 +138,7 @@ export const Room = memo(() => {
               <AvatarsStack users={users} />
             </Glass>
           )}
-        </>
+        </div>
       )}
     </Layout>
   );

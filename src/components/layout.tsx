@@ -18,15 +18,13 @@ export const Layout: FC<Props> = ({ children, header = null }) => {
       </div>
 
       <Grid container height={'100vh'} className='layout-content'>
-        <Grid item xs={12}>
-          <div className='layout-logo-wrapper'>
-            <img
-              src='https://storage.yandexcloud.net/byte-club-bucket/logo-grad.png'
-              className='layout-logo'
-            />
-          </div>
+        <Grid item xs={12} className='layout-logo-wrapper'>
+          <img
+            src='https://storage.yandexcloud.net/byte-club-bucket/logo-grad.png'
+            className='layout-logo'
+          />
         </Grid>
-        {header && <div className='layout-header'>{header}</div>}
+        <Grid item xs={12}></Grid>
         <Grid item xs={1} sm={2}></Grid>
         <Grid item xs={10} sm={8}>
           {children}

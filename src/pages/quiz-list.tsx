@@ -24,7 +24,11 @@ export const QuizList = memo(() => {
   }
 
   return (
-    <Layout header={<Typography variant='h2'>Выбери квиз</Typography>}>
+    <Layout>
+      {state.user === null && <Navigate to='/auth' />}
+      <Typography variant='h2' align='center'>
+        Выбери квиз
+      </Typography>
       <div className='generate-new-quiz'>
         <Typography variant='h6'>
           Или сгенерируй его на основе нейронных сетей!
@@ -33,7 +37,6 @@ export const QuizList = memo(() => {
           Сгенерировать
         </Button>
       </div>
-      {state.user === null && <Navigate to='/auth' />}
       {isLoading ? (
         <Loader />
       ) : (
