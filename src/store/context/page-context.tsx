@@ -1,6 +1,5 @@
 import React, { FC, ReactNode, useContext, useReducer } from 'react';
 import { Quiz, RatingTableRow } from '../../api/types';
-import { getLocalItem, setLocalItem } from './local-storage';
 
 type ContextType = {
   state: State;
@@ -8,7 +7,7 @@ type ContextType = {
 };
 
 const initialState: State = {
-  user: getLocalItem('user'),
+  user: null,
   quiz: null,
   sessionId: null,
   currentQuestionId: null,
@@ -49,7 +48,6 @@ type State = {
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case ActionType.SET_USER: {
-      setLocalItem('user', action.payload);
       return {
         ...state,
         user: action.payload,

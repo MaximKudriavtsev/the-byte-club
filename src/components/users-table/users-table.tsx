@@ -22,7 +22,7 @@ export const UsersTable = () => {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+      <Table aria-label='simple table'>
         <TableHead>
           <TableRow>
             <TableCell></TableCell>
@@ -33,7 +33,11 @@ export const UsersTable = () => {
         </TableHead>
         <TableBody>
           {rows.map((row, index) => (
-            <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            <TableRow
+              key={row.userId}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              className={row.userId === state.user.id ? 'selected-row' : ''}
+            >
               <TableCell component='th' scope='row' width={10}>
                 {getPlace(index + 1)}
               </TableCell>

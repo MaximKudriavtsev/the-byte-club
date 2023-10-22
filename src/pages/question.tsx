@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, memo } from 'react';
+import React, { FC, useState, useEffect, memo, useRef } from 'react';
 import { Question } from '../api/types';
 import { Paper } from '@mui/material';
 import { Grid } from '@mui/material';
@@ -11,6 +11,7 @@ import productionApi from '../api/production';
 import { usePageContext } from '../store/context/page-context';
 import { useSocket } from '../socket-service/socket-hook';
 import { useNavigate } from 'react-router-dom';
+import { UsersTable } from '../components/users-table/users-table';
 
 const Question: FC = memo(() => {
   const { state } = usePageContext();
@@ -23,6 +24,7 @@ const Question: FC = memo(() => {
     quiz?.questions.findIndex(question => question.id === currentQuestionId) || 0;
   const variants = question?.variants;
 
+  const tableRef = useRef<HTMLDivElement>(null);
   const [reveal, setReveal] = useState(false);
   const [isVariantsEnabled, setVariantsEnabled] = useState(true);
   const [selectedVariantId, setSelectedVariantId] = useState<number | null>(null);
@@ -36,9 +38,7 @@ const Question: FC = memo(() => {
     }
 
     if (currentQuestionId === null) {
-      setTimeout(() => {
-        navigate('/rating');
-      }, 1500);
+      navigate('/rating');
     }
   }, [currentQuestionId]);
 
@@ -63,6 +63,12 @@ const Question: FC = memo(() => {
       setReveal(true);
     }
   }, [timeLeft]);
+
+  useEffect(() => {
+    if (tableRef) {
+      tableRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, []);
 
   const selectVariant = (id: number) => {
     setSelectedVariantId(id);
@@ -106,6 +112,17 @@ const Question: FC = memo(() => {
           </Grid>
         ))}
       </Grid>
+
+      {state.user?.isAdmin && (
+        <>
+          {Array.from({ length: 50 }).map((_, index) => (
+            <br key={index.toString()} />
+          ))}
+          <div ref={tableRef}>
+            <UsersTable />
+          </div>
+        </>
+      )}
     </Layout>
   );
 });

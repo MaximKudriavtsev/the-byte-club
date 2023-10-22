@@ -1,9 +1,62 @@
+@import '/src/media.scss';
+
 .auth {
   width: 100%;
-  height: 100vh;
+  height: 300px;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+
+  @include phoneTablet {
+    flex-direction: column;
+    height: 400px;
+  }
+
+  &-text {
+    color: white;
+    @include phoneTablet {
+      color: black;
+    }
+  }
+
+  &-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50%;
+
+    @include phoneTablet {
+      margin: auto;
+      height: auto;
+      width: 100%;
+    }
+  }
+
+  &-text-wrapper {
+    width: 50%;
+    background: rgb(86, 234, 138);
+    background: linear-gradient(90deg, rgba(86, 234, 138, 1) 43%, rgba(4, 179, 235, 1) 100%);
+
+    @include phoneTablet {
+      background: transparent;
+      height: auto;
+      width: 80%;
+    }
+  }
+
+  &-inputs-wrapper {
+    width: 50%;
+
+    @include phoneTablet {
+      height: auto;
+      width: 80%;
+    }
+  }
+  // background: rgb(86, 234, 138);
+  // background: radial-gradient(linear, rgba(86, 234, 138, 1) 43%, rgba(4, 179, 235, 1) 100%);
 }

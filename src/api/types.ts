@@ -53,5 +53,5 @@ export type WsQuestionId = {
 export type Session = {
   quizId: number;
   users: User[];
-  adminId: number;
+  admin: number;
 };
