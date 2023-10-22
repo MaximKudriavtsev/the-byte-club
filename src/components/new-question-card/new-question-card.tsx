@@ -63,13 +63,11 @@ const NewQuestionCard: FC<NewQuestionCardProps> = ({
               <SwitchRightVariant
                 key={index}
                 value={currentQuestion.variants[index]?.isRight || false}
-                onChange={(event: any) => {
-                  debugger;
+                onChange={(event) => {
                   const value = event.target.checked;
 
                   setQuizQuestions(prevState => {
                     const prevValue = prevState[currentIndex].variants[index].isRight;
-                    debugger;
                     if (
                       prevState[currentIndex].variants.reduce(
                         (acc, item) => (item.isRight ? (acc += 1) : acc),
@@ -78,10 +76,7 @@ const NewQuestionCard: FC<NewQuestionCardProps> = ({
                       (!value && prevValue)
                     ) {
                       const nextState = cloneDeep(prevState);
-
-                      const nextValue = value;
-
-                      nextState[currentIndex].variants[index].isRight = nextValue;
+                      nextState[currentIndex].variants[index].isRight = value;
                       return nextState;
                     }
                     return prevState;

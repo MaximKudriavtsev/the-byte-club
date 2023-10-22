@@ -3,10 +3,10 @@ import React, {FC, useState} from 'react';
 import {TextField} from "@mui/material";
 
 interface VariantAnswerProps {
-  value: any;
-  onChange: any;
+  value: string;
+  onChange: (value: any) => any;
 }
-const VariantAnswer: FC<VariantAnswerProps> = ({value, onChange}) => {
+const VariantAnswer: FC<VariantAnswerProps> = () => {
   const [questionVariant, setQuestionVariant] = useState('');
 
   return (

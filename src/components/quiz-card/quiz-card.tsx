@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 
 import './quiz-card.scss';
 import { Glass } from '../glass/glass';
+import { Typography } from '@mui/material';
 
 interface QuizCardProps {
   user: User;
@@ -23,7 +24,9 @@ interface QuizCardProps {
 const QuizCard: FC<QuizCardProps> = ({ quiz, user }) => {
   const navigate = useNavigate();
   const { dispatch } = usePageContext();
-  const { data, mutate } = useMutation(() => productionApi.createQuizSession(user.id, quiz.id));
+  const { data, mutate, isLoading } = useMutation(() =>
+    productionApi.createQuizSession(user.id, quiz.id),
+  );
 
   useEffect(() => {
     if (data) {
@@ -35,7 +38,7 @@ const QuizCard: FC<QuizCardProps> = ({ quiz, user }) => {
 
   return (
     <Glass className='quiz-card-wrapper'>
-      <h3> {quiz.title}</h3>
+      <Typography variant='h6'>{quiz.title}</Typography>
       <div className='quiz-card-button-wrapper'>
         {user.isAdmin ? (
           <>
@@ -52,6 +55,7 @@ const QuizCard: FC<QuizCardProps> = ({ quiz, user }) => {
             endIcon={<ArrowForwardIosIcon />}
             onClick={() => mutate()}
             size='small'
+            disabled={isLoading}
           >
             Начать
           </Button>

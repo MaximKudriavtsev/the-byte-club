@@ -22,7 +22,7 @@ export const UsersTable = () => {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+      <Table aria-label='simple table'>
         <TableHead>
           <TableRow>
             <TableCell></TableCell>
@@ -32,18 +32,24 @@ export const UsersTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, index) => (
-            <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component='th' scope='row' width={10}>
-                {getPlace(index + 1)}
-              </TableCell>
-              <TableCell component='th' scope='row'>
-                {row.name}
-              </TableCell>
-              <TableCell align='right'>{row.time}</TableCell>
-              <TableCell align='right'>{row.score}</TableCell>
-            </TableRow>
-          ))}
+          {rows.map((row, index) => {
+            return (
+              <TableRow
+                key={`${row.userId}_${Date.now()}`}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                selected={row.userId === state.user.id}
+              >
+                <TableCell component='th' scope='row' width={10}>
+                  {getPlace(index + 1)}
+                </TableCell>
+                <TableCell component='th' scope='row'>
+                  {row.name}
+                </TableCell>
+                <TableCell align='right'>{row.time}</TableCell>
+                <TableCell align='right'>{row.score}</TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>

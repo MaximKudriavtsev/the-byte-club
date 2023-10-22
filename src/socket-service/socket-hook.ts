@@ -26,16 +26,12 @@ export const useSocket = (sessionId: number | null) => {
             type: ActionType.SET_CURRENT_QUESTION_ID,
             payload: payload.message.current_question_id,
           });
+          dispatch({ type: ActionType.SET_TABLE, payload: payload.message.table });
         } else if (payload.message.action === 'rating') {
           dispatch({ type: ActionType.SET_TABLE, payload: payload.message.table });
           dispatch({ type: ActionType.SET_CURRENT_QUESTION_ID, payload: null });
         }
       });
-
-      // window.Echo.channel(`room-${sessionId}`).listen('Rating', (payload: any) => {
-      //   console.log('rating: ', payload);
-      //   dispatch({ type: ActionType.SET_CURRENT_QUESTION_ID, payload });
-      // });
     }
 
     return () => {

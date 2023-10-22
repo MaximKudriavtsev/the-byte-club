@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography } from '@mui/material';
 
 import { Layout } from '../components/layout';
 import { UsersTable } from '../components/users-table/users-table';
 import productionApi from '../api/production';
 import { useQuery } from 'react-query';
+import { usePageContext } from '../store/context/page-context';
 
 export const RatingTable = () => {
   return (
