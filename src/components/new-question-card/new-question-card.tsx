@@ -30,7 +30,7 @@ const NewQuestionCard: FC<NewQuestionCardProps> = ({
           fullWidth
           placeholder='Введите текст вопроса'
           variant='outlined'
-          value={currentQuestion.title || newQuizQuestion}
+          value={newQuizQuestion}
           onChange={e => {
             setNewQuizQuestion(e.target.value);
             setQuizQuestions(prevState => {
