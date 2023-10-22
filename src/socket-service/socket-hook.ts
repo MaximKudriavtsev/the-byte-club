@@ -30,6 +30,8 @@ export const useSocket = (sessionId: number | null) => {
         } else if (payload.message.action === 'rating') {
           dispatch({ type: ActionType.SET_TABLE, payload: payload.message.table });
           dispatch({ type: ActionType.SET_CURRENT_QUESTION_ID, payload: null });
+        } else if (payload.message.action === 'table') {
+          dispatch({ type: ActionType.SET_TABLE, payload: payload.message.table });
         }
       });
     }
