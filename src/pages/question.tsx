@@ -11,6 +11,7 @@ import productionApi from '../api/production';
 import { usePageContext } from '../store/context/page-context';
 import { useSocket } from '../socket-service/socket-hook';
 import { useNavigate } from 'react-router-dom';
+import Confetti from 'react-confetti';
 import { UsersTable } from '../components/users-table/users-table';
 
 const Question: FC = memo(() => {
@@ -28,6 +29,7 @@ const Question: FC = memo(() => {
   const [reveal, setReveal] = useState(false);
   const [isVariantsEnabled, setVariantsEnabled] = useState(true);
   const [selectedVariantId, setSelectedVariantId] = useState<number | null>(null);
+  const [isAnswerCorrect, setAnswerCorrect] = useState(false);
   const [timeLeft, setTimeLeft] = useState(question?.time || 0);
 
   useEffect(() => {
@@ -61,6 +63,13 @@ const Question: FC = memo(() => {
   useEffect(() => {
     if (timeLeft === 0) {
       setReveal(true);
+      const correctVariant = variants?.filter(variant => variant.isRight);
+      if (!correctVariant) return;
+      if (correctVariant[0].id === selectedVariantId) {
+        setAnswerCorrect(true);
+      }
+    } else {
+      setAnswerCorrect(false);
     }
   }, [timeLeft]);
 
@@ -80,6 +89,16 @@ const Question: FC = memo(() => {
 
   return (
     <Layout>
+      <div className='confetti'>
+        <Confetti
+          width={window.screen.width}
+          height={window.screen.height}
+          gravity={0.8}
+          numberOfPieces={100}
+          opacity={isAnswerCorrect ? 1 : 0}
+        />
+      </div>
+
       <Paper className='question-wrapper'>
         <div className='question-header'>
           <p>

@@ -1,5 +1,11 @@
 @import '/src/media.scss';
 
+.confetti {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .question {
   &-header {
     width: 100%;
