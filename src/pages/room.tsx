@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { ActionType, usePageContext } from '../store/context/page-context';
 import { useSocket } from '../socket-service/socket-hook';
 import { Glass } from '../components/glass/glass';
+import { Loader } from '../components/loader/loader';
 
 export const Room = memo(() => {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ export const Room = memo(() => {
   return (
     <Layout header={<h2>{quiz?.title}</h2>}>
       {isLoading || isSessionLoading ? (
-        <div>Loading...</div>
+        <Loader />
       ) : (
         <>
           <div className='room-wrapper'>
