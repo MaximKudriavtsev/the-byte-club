@@ -8,20 +8,6 @@ import { useQuery } from 'react-query';
 import { usePageContext } from '../store/context/page-context';
 
 export const RatingTable = () => {
-  const { state } = usePageContext();
-
-  // useEffect(() => {
-  //   const currentQuestion = state.quiz?.questions.find(
-  //     question => state.currentQuestionId === question.id,
-  //   );
-
-  //   setTimeout(() => {
-  //     if (state.sessionId) {
-  //       productionApi.switchQuestion(state.sessionId);
-  //     }
-  //   }, currentQuestion?.time);
-  // }, [state.user, state.currentQuestionId, state.quiz, state.sessionId]);
-
   return (
     <Layout>
       <br />
