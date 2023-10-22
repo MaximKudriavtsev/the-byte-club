@@ -1,6 +1,27 @@
 import React, { FC, useEffect, useState } from 'react';
 import './countdown.scss';
 
+const smiles = [
+  '⭐️',
+  '🎃',
+  '🎉',
+  '🦊',
+  '🦁',
+  '🦄',
+  '🙈',
+  '🐙',
+  '🐳',
+  '🍀',
+  '🔥',
+  '☀️',
+  '✨',
+  '🌸',
+  '🏆',
+];
+const getRandomSmile = () => {
+  return smiles[Math.floor(Math.random() * smiles.length)];
+};
+
 interface CountdownProps {
   initialTime: number;
 }
@@ -26,7 +47,7 @@ const Countdown: FC<CountdownProps> = ({ initialTime }) => {
 
   return (
     <div id='countdown'>
-      <div id='countdown-number'>{countdown || '⭐️'}</div>
+      <div id='countdown-number'>{countdown || getRandomSmile()}</div>
       <svg id='countdown-svg'>
         <circle id='countdown-circle' r='18' cx='20' cy='20'></circle>
       </svg>
