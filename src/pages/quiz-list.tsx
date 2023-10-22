@@ -7,7 +7,7 @@ import { usePageContext } from '../store/context/page-context';
 import { Navigate } from 'react-router-dom';
 import { Loader } from '../components/loader/loader';
 import { Typography } from '@mui/material';
-import Button from "@mui/material/Button";
+import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 
 import './quiz-list.scss';
@@ -21,7 +21,7 @@ export const QuizList = memo(() => {
 
   const goGenerateQuizPage = () => {
     navigate('/generate-quiz');
-  }
+  };
 
   return (
     <Layout>
@@ -30,9 +30,7 @@ export const QuizList = memo(() => {
         Выбери квиз
       </Typography>
       <div className='generate-new-quiz'>
-        <Typography variant='h6'>
-          Или сгенерируй его на основе нейронных сетей!
-        </Typography>
+        <p className='generate-text'>Или сгенерируй его на основе нейронных сетей!</p>
         <Button variant='contained' onClick={() => goGenerateQuizPage()} size='large'>
           Сгенерировать
         </Button>
