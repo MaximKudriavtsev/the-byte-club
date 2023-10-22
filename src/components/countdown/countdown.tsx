@@ -19,7 +19,11 @@ const smiles = [
   '🏆',
 ];
 const getRandomSmile = () => {
-  return smiles[Math.floor(Math.random() * smiles.length)];
+  let smile = '⭐️';
+  try {
+    smile = smiles[Math.floor(Math.random() * smiles.length)];
+  } catch (e) {}
+  return smile;
 };
 
 interface CountdownProps {
