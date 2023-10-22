@@ -20,7 +20,7 @@ export const GenerateQuiz = () => {
         <Paper elevation={3} className='generate-quiz'>
           <div className="generate-quiz-title">
             <Typography variant='h5' component='h5' align='center'>
-              Сгенерируйте свой квиз, на любую тему
+              Сгенерируйте свой квиз, на тему
             </Typography>
           </div>
 
@@ -42,6 +42,7 @@ export const GenerateQuiz = () => {
               onClick={() => generateCustomQuiz()}
               size='large'
               className='generate-quiz-button'
+              disabled={!quizTextToGenerate}
             >
               Сгенерировать
             </Button>

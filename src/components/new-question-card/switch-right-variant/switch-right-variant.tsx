@@ -3,8 +3,8 @@ import React, { FC, useState } from 'react';
 import Switch from '@mui/material/Switch';
 
 interface SwitchRightVariantProps {
-  value: any;
-  onChange: any;
+  value: boolean;
+  onChange: (value: any) => any;
 }
 
 const SwitchRightVariant: FC<SwitchRightVariantProps> = ({ value, onChange }) => {
