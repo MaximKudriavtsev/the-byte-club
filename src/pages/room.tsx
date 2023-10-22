@@ -32,11 +32,6 @@ export const Room = memo(() => {
     onSuccess: () => {
       setTimeout(() => {
         navigate('/question');
-        // if (state.user.isAdmin) {
-        //   navigate('/rating');
-        // } else {
-        //   navigate('/question');
-        // }
       }, 500);
     },
   });
@@ -120,9 +115,11 @@ export const Room = memo(() => {
           ) : (
             <p className='room-user-counter'>{`Присоединились ${users.length} человек(а)`}</p>
           )}
-          <Glass className='room-user-avatars'>
-            <AvatarsStack users={users} />
-          </Glass>
+          {users?.length > 0 && (
+            <Glass className='room-user-avatars'>
+              <AvatarsStack users={users} />
+            </Glass>
+          )}
         </>
       )}
     </Layout>
