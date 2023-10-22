@@ -116,7 +116,7 @@ export const Room = memo(() => {
               <p className='room-user-counter'>Ожидайте старта игры..</p>
             )}
             <Button
-              variant='contained'
+              variant='outlined'
               endIcon={<ContentCopyIcon />}
               onClick={() => copyToClipboard(roomLink)}
               size='large'
