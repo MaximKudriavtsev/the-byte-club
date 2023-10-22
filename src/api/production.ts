@@ -173,6 +173,23 @@ export const productionApi: Api = {
       .then(recursiveToCamel)
       .catch(logError);
   },
+
+  /**
+   * Генерация нового квиза
+   */
+  generateQuiz: (theme) => {
+    return fetch(`${URL}/quiz/generate`, {
+      method: 'POST',
+      body: JSON.stringify({ theme }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(checkIfError)
+      .then(parseToJson)
+      .then(recursiveToCamel)
+      .catch(logError);
+  },
 };
 
 export default productionApi;

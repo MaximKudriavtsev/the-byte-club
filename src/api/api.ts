@@ -69,4 +69,8 @@ export type Api = {
    * Сохраниение новой структуры квиза
    */
   createQuiz: (quiz: Quiz) => Promise<void>;
+  /**
+   * Генерация квиза
+   */
+  generateQuiz: (theme: string) => Promise<void>;
 };

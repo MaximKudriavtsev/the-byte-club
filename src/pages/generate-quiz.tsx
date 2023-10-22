@@ -1,19 +1,27 @@
 import React, {useState} from 'react';
-
-import Paper from '@mui/material/Paper';
 import {TextField, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
-
+import {Glass} from "../components/glass/glass";
 import { Layout } from '../components/layout';
 
+import { useNavigate } from 'react-router-dom';
+
 import './generate-quiz.scss';
-import {Glass} from "../components/glass/glass";
+import productionApi from "../api/production";
 
 export const GenerateQuiz = () => {
   const [quizTextToGenerate, setQuizTextToGenerate] = useState('');
+  const navigate = useNavigate();
 
   const generateCustomQuiz = () => {
     console.log('quizTextToGenerate: ', quizTextToGenerate);
+    if(quizTextToGenerate){
+      productionApi.generateQuiz(quizTextToGenerate.toString()).then((data) => {
+          console.log('data from ANTOHA:', data);
+          navigate('/quiz-list')
+        }
+      )
+    }
   };
 
   return (
