@@ -6,9 +6,9 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import createTheme from '@mui/material/styles/createTheme';
 
-import { store } from './store/reducers/store';
+import { store } from './store/store';
 import { Auth } from './pages/auth';
-import { PageContextProvider, usePageContext } from './store/context/page-context';
+import { PageContextProvider, usePageContext } from './context/page-context';
 import { QuizList } from './pages/quiz-list';
 import { RatingTable } from './pages/rating-table';
 import { CreateQuiz } from './pages/create-quiz';

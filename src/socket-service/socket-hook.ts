@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { createSocketConnection } from './socket-service';
-import { ActionType, usePageContext } from '../store/context/page-context';
+import { ActionType, usePageContext } from '../context/page-context';
 import { RatingTableRow } from '../api/types';
 
 type WsAction = {

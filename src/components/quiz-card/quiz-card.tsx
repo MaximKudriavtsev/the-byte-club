@@ -9,7 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { useMutation } from 'react-query';
 import productionApi from '../../api/production';
-import { ActionType, usePageContext } from '../../store/context/page-context';
+import { ActionType, usePageContext } from '../../context/page-context';
 import { useNavigate } from 'react-router-dom';
 
 import './quiz-card.scss';

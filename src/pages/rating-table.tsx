@@ -5,7 +5,7 @@ import { Layout } from '../components/layout';
 import { UsersTable } from '../components/users-table/users-table';
 import productionApi from '../api/production';
 import { useQuery } from 'react-query';
-import { usePageContext } from '../store/context/page-context';
+import { usePageContext } from '../context/page-context';
 
 export const RatingTable = () => {
   return (

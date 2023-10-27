@@ -8,7 +8,7 @@ import { VariantCard } from '../components/variant-card/variant-card';
 import './question.scss';
 import { Countdown } from '../components/countdown/countdown';
 import productionApi from '../api/production';
-import { usePageContext } from '../store/context/page-context';
+import { usePageContext } from '../context/page-context';
 import { useSocket } from '../socket-service/socket-hook';
 import { useNavigate } from 'react-router-dom';
 import Confetti from 'react-confetti';

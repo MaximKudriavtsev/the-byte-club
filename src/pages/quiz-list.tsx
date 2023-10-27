@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import { QuizCard } from '../components/quiz-card/quiz-card';
 import { Layout } from '../components/layout';
 import { productionApi } from '../api/production';
-import { usePageContext } from '../store/context/page-context';
+import { usePageContext } from '../context/page-context';
 import { Navigate } from 'react-router-dom';
 import { Loader } from '../components/loader/loader';
 import { Typography } from '@mui/material';

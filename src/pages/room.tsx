@@ -12,7 +12,7 @@ import { useCopyToClipboard } from '@uidotdev/usehooks';
 
 import './room.scss';
 import { useNavigate } from 'react-router-dom';
-import { ActionType, usePageContext } from '../store/context/page-context';
+import { ActionType, usePageContext } from '../context/page-context';
 import { useSocket } from '../socket-service/socket-hook';
 import { Glass } from '../components/glass/glass';
 import { Loader } from '../components/loader/loader';

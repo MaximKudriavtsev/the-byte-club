@@ -1,5 +1,5 @@
 import React, { FC, ReactNode, useContext, useReducer } from 'react';
-import { Quiz, RatingTableRow } from '../../api/types';
+import { Quiz, RatingTableRow } from '../api/types';
 
 type ContextType = {
   state: State;
