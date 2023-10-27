@@ -5,7 +5,8 @@ module.exports = {
       },
       extends: [
         "plugin:@typescript-eslint/recommended",
-        "prettier"
+        "prettier",
+        "plugin:storybook/recommended"
       ],
       parserOptions: {
         "ecmaFeatures": {
