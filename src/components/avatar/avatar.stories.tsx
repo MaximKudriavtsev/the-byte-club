@@ -3,7 +3,7 @@ import { Avatar } from './avatar';
 
 const meta = {
   component: Avatar,
-  title: 'Example/Avatar',
+  title: 'Components/Avatar',
   args: {},
 } satisfies Meta<typeof Avatar>;
 

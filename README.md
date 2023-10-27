@@ -26,3 +26,11 @@ npm run start
 ```
 npm run build:prod
 ```
+
+## Storybook
+
+Для запуска сторибука
+
+```
+npm run storybook
+```
