@@ -3,7 +3,7 @@ import './glass.scss';
 
 interface GlassProps {
   children: React.ReactNode;
-  className: string;
+  className?: string;
 }
 
 const Glass: FC<GlassProps> = ({ children, className }) => {

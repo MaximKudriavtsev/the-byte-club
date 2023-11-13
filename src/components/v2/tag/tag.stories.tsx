@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { ChipOwnProps } from '@mui/material/Chip';
 import { Tag } from './tag';
 
 const meta = {
