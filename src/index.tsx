@@ -4,7 +4,7 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
-import createTheme from '@mui/material/styles/createTheme';
+import createTheme, { Theme } from '@mui/material/styles/createTheme';
 
 import { store } from './store/store';
 import { Auth } from './pages/auth';
@@ -19,6 +19,16 @@ import { Room } from './pages/room';
 import { Question } from './pages/question';
 
 const muiTheme = createTheme({
+  typography: {
+    "fontFamily": ['-apple-system', '"Helvetica Neue"', '"Segoe UI"', 'Roboto', 'Aarial'].join(','),
+    h3: {
+      "fontSize": 32,
+      "fontWeight": 300
+    },
+    button: {
+      textTransform: 'none',
+    },
+  },
   palette: {
     primary: {
       main: '#04b3eb',
