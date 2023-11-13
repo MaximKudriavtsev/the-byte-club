@@ -11,7 +11,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const OneUser: Story = {
+export const Main: Story = {
   args: {
     users: [
       {
