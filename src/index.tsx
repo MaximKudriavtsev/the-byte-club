@@ -4,7 +4,7 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
-import createTheme, { Theme } from '@mui/material/styles/createTheme';
+import { muiTheme } from './theme/theme';
 
 import { store } from './store/store';
 import { Auth } from './pages/auth';
@@ -17,33 +17,6 @@ import { GenerateQuiz } from './pages/generate-quiz';
 import './index.scss';
 import { Room } from './pages/room';
 import { Question } from './pages/question';
-
-const muiTheme = createTheme({
-  typography: {
-    "fontFamily": ['-apple-system', '"Helvetica Neue"', '"Segoe UI"', 'Roboto', 'Aarial'].join(','),
-    h3: {
-      "fontSize": 32,
-      "fontWeight": 300
-    },
-    button: {
-      textTransform: 'none',
-    },
-  },
-  palette: {
-    primary: {
-      main: '#04b3eb',
-      contrastText: '#fff',
-    },
-    secondary: {
-      main: '#fff',
-      contrastText: '#04b3eb',
-    },
-
-    warning: {
-      main: '#ff3b30',
-    },
-  },
-});
 
 const queryClient = new QueryClient();
 

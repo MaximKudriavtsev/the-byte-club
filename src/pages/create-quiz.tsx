@@ -8,7 +8,7 @@ import { Grid, TextField, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 
 import './create-quiz.scss';
-import { Question } from '../api/types';
+import { QuestionType } from '../api/types';
 import { NewQuestionCard } from '../components/new-question-card/new-question-card';
 
 export const CreateQuiz = () => {
@@ -17,7 +17,7 @@ export const CreateQuiz = () => {
   const { data: user } = useQuery('auth', () => productionApi.authUser(localUser));
 
   const [quizTitle, setQuizTitle] = useState('');
-  const [quizQuestions, setQuizQuestions] = useState<Question[]>([]);
+  const [quizQuestions, setQuizQuestions] = useState<QuestionType[]>([]);
 
   useEffect(() => {
     if (user) {

@@ -1,8 +1,5 @@
-import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { QuizCard } from './quiz-card';
-
-import ThemeProvider from '@mui/material/styles/ThemeProvider';
 
 const meta = {
   component: QuizCard,

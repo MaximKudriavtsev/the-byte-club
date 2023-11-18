@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect, memo, useRef } from 'react';
-import { Question } from '../api/types';
+import { QuestionType } from '../api/types';
 import { Paper } from '@mui/material';
 import { Grid } from '@mui/material';
 import { Layout } from '../components/layout';

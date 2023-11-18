@@ -1,3 +1,5 @@
+const borderRadius = 12;
+
 export const themeColors = {
   blue: '#04b3eb',
   green: '#56ea8a',
@@ -10,5 +12,6 @@ export const themeColors = {
 };
 
 export const themeSizes = {
-  borderRadius: '12px',
+  borderRadiusNum: borderRadius,
+  borderRadius: borderRadius + 'px',
 };

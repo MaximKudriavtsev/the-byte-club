@@ -5,14 +5,14 @@ import { Grid, TextField, Typography } from '@mui/material';
 
 import { SwitchRightVariant } from './switch-right-variant/switch-right-variant';
 import { VariantAnswer } from './variant-answer/variant-answer';
-import { Question } from '../../api/types';
+import { QuestionType } from '../../api/types';
 
 import './new-question-card.scss';
 
 interface NewQuestionCardProps {
-  setQuizQuestions: React.Dispatch<React.SetStateAction<Question[]>>;
+  setQuizQuestions: React.Dispatch<React.SetStateAction<QuestionType[]>>;
   currentIndex: number;
-  quizQuestions: Question[];
+  quizQuestions: QuestionType[];
 }
 const NewQuestionCard: FC<NewQuestionCardProps> = ({
   setQuizQuestions,
@@ -63,7 +63,7 @@ const NewQuestionCard: FC<NewQuestionCardProps> = ({
               <SwitchRightVariant
                 key={index}
                 value={currentQuestion.variants[index]?.isRight || false}
-                onChange={(event) => {
+                onChange={event => {
                   const value = event.target.checked;
 
                   setQuizQuestions(prevState => {

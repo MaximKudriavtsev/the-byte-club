@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { ButtonBase, Paper as MaterialPaper } from '@mui/material';
-import { themeColors, themeSizes } from '../../../theme/config.theme';
 import { SxProps } from '@mui/system';
 
 interface PaperProps {
