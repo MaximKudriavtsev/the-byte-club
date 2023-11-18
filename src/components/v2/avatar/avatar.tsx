@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import { default as MaterialAvatar } from '@mui/material/Avatar';
-import { User } from '../../api/types';
-import { stringToColor } from './../utils';
+import { User } from '../../../api/types';
+import { stringToColor } from '../../utils';
 import { Typography } from '@mui/material';
 
 interface AvatarProps {

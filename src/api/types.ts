@@ -8,10 +8,10 @@ export type User = {
 export type Quiz = {
   id: number;
   title: string;
-  questions: Question[];
+  questions: QuestionType[];
 };
 
-export type Question = {
+export type QuestionType = {
   id: number;
   quizId: number;
   title: string;

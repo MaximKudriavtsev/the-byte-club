@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
 import { LoadingButton as MaterialButton } from '@mui/lab';
 import { Typography } from '@mui/material';
-
-import variables from './../../../variables.module.scss';
+import { SxProps } from '@mui/system';
 
 export enum ButtonType {
   Primary,
@@ -20,68 +19,18 @@ interface ButtonProps {
   size?: 'small' | 'medium' | 'large';
   disabled?: boolean;
   type?: ButtonType;
+  sx?: SxProps;
 }
 
-interface ButtonStyle {
-  background: string;
-  color: string;
-  border: string;
-  '&:hover': {
-    boxShadow: string;
-    background: string;
-    textDecoration?: string;
-  };
-}
-
-const PrimaryStyle: ButtonStyle = {
-  background: variables.mainGradient,
-  color: 'white',
-  border: 'none',
-  '&:hover': {
-    background: variables.mainGradient,
-    boxShadow: '0 2px 4px 4px rgba(0, 0, 0, .15)',
-  },
-};
-
-const SecondaryStyle: ButtonStyle = {
-  background: 'rgba(255,255,255,0.3)',
-  color: 'black',
-  border: `1px solid ${variables.borderColor}`,
-  '&:hover': {
-    background: 'rgba(255,255,255,0.5)',
-    boxShadow: 'none',
-  },
-};
-
-const LinkStyle: ButtonStyle = {
-  background: 'transparent',
-  color: variables.blueColor,
-  border: 'none',
-  '&:hover': {
-    textDecoration: 'underline',
-    background: 'transparent',
-    boxShadow: 'none',
-  },
-};
-
-const WarningStyle: ButtonStyle = {
-  background: variables.dangerColor,
-  color: 'white',
-  border: 'none',
-  '&:hover': {
-    boxShadow: '0 2px 4px 4px rgba(0, 0, 0, .15)',
-    background: variables.dangerColor,
-  },
-};
-
-const setStyle = (type: ButtonType): ButtonStyle => {
-  if (type === ButtonType.Warning) return WarningStyle;
-  if (type === ButtonType.Link) return LinkStyle;
-  if (type === ButtonType.Secondary) return SecondaryStyle;
-  return PrimaryStyle;
+const setColor = (buttonType: ButtonType) => {
+  if (buttonType === ButtonType.Warning) return 'error';
+  if (buttonType === ButtonType.Link) return 'info';
+  if (buttonType === ButtonType.Secondary) return 'secondary';
+  return 'primary';
 };
 
 const Button: FC<ButtonProps> = ({
+  sx,
   loading = false,
   fullWidth = false,
   children,
@@ -93,6 +42,7 @@ const Button: FC<ButtonProps> = ({
 }) => {
   return (
     <MaterialButton
+      sx={sx}
       loading={loading}
       fullWidth={fullWidth}
       endIcon={endIcon}
@@ -100,14 +50,9 @@ const Button: FC<ButtonProps> = ({
       size={size}
       disabled={disabled}
       disableRipple={type === ButtonType.Link ? true : false}
-      sx={{
-        borderRadius: '10px',
-        transition: 'all .2s',
-        '&:disabled': {
-          filter: 'brightness(110%)',
-        },
-        ...setStyle(type),
-      }}
+      color={setColor(type)}
+      disableElevation
+      variant={type == ButtonType.Link ? 'text' : 'contained'}
     >
       <Typography>{children}</Typography>
     </MaterialButton>

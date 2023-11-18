@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import Stack from '@mui/material/Stack';
-import { Avatar } from '../avatar/avatar';
+import { Avatar } from '../v2/avatar/avatar';
 import { User } from '../../api/types';
 import './avatars-stack.scss';
 

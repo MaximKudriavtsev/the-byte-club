@@ -1,16 +1,13 @@
 import React, { FC } from 'react';
 
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Stack from '@mui/material/Stack';
 
 import { AvatarsStack } from '../avatars-stack/avatars-stack';
-import { Glass } from '../glass/glass';
+import { Paper } from './../paper/paper';
 import { Tag } from './../tag/tag';
 
 import { User } from './../../../api/types';
-
-import variables from './../../../variables.module.scss';
-import './quiz-card.scss';
 
 interface QuizCardProps {
   title: string;
@@ -20,28 +17,41 @@ interface QuizCardProps {
 
 const QuizCard: FC<QuizCardProps> = ({ title, users, tags }) => {
   return (
-    <Button
+    <Paper
       sx={{
-        background: 'transparent',
-        color: 'black',
-        padding: 0,
-        borderRadius: variables.glassBorderRadius,
+        width: 220,
+        padding: 2,
       }}
+      touchable={true}
     >
-      <Glass className='quiz-card-v2-wrapper'>
-        <Typography variant='h3'>{title}</Typography>
-        <Stack direction='row' spacing={1} className='quiz-card-v2-tags' useFlexGap flexWrap='wrap'>
-          {tags
-            ? tags.map((tag, i) => (
-                <Tag size='small' fontSize={9} key={i}>
-                  {tag}
-                </Tag>
-              ))
-            : null}
-        </Stack>
-        {users ? <AvatarsStack className='quiz-card-v2-avatars' users={users} /> : null}
-      </Glass>
-    </Button>
+      <Typography variant='h3' align='left'>
+        {title}
+      </Typography>
+      <Stack
+        direction='row'
+        spacing={1}
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignContent: 'flex-start',
+          margin: '10px 0',
+          width: '100%',
+          height: 90,
+          overflow: 'hidden',
+        }}
+        useFlexGap
+        flexWrap='wrap'
+      >
+        {tags
+          ? tags.map((tag, i) => (
+              <Tag size='small' fontSize={9} key={i}>
+                {tag}
+              </Tag>
+            ))
+          : null}
+      </Stack>
+      {users ? <AvatarsStack users={users} /> : null}
+    </Paper>
   );
 };
 
