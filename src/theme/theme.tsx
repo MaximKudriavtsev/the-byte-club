@@ -29,7 +29,7 @@ export const muiTheme = createTheme({
       contrastText: '#04b3eb',
     },
     success: {
-      main: '#000000',
+      main: themeColors.green,
     },
     warning: {
       main: '#ff3b30',
@@ -51,6 +51,13 @@ export const muiTheme = createTheme({
         root: () => ({
           borderRadius: themeSizes.borderRadius,
           color: 'white',
+        }),
+      },
+    },
+    MuiCheckbox: {
+      styleOverrides: {
+        root: () => ({
+          color: themeColors.border,
         }),
       },
     },

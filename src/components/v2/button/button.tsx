@@ -20,6 +20,8 @@ interface ButtonProps {
   disabled?: boolean;
   type?: ButtonType;
   sx?: SxProps;
+  rounded?: boolean;
+  roundSize?: number;
 }
 
 const setColor = (buttonType: ButtonType) => {
@@ -39,17 +41,35 @@ const Button: FC<ButtonProps> = ({
   size = 'medium',
   disabled = false,
   type = ButtonType.Primary,
+  rounded = false,
+  roundSize = 32,
 }) => {
+  const roundedStyle: SxProps = {
+    minWidth: roundSize,
+    maxWidth: roundSize,
+    width: roundSize,
+    minHeight: roundSize,
+    maxHeight: roundSize,
+    height: roundSize,
+    borderRadius: '50%',
+    overflow: 'hidden',
+    '.MuiTypography-root': {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  };
+
   return (
     <MaterialButton
-      sx={sx}
+      sx={{ ...(rounded ? roundedStyle : {}), ...sx }}
       loading={loading}
       fullWidth={fullWidth}
       endIcon={endIcon}
       onClick={onClick}
-      size={size}
+      size={rounded ? 'small' : size}
       disabled={disabled}
-      disableRipple={type === ButtonType.Link ? true : false}
+      disableRipple={type === ButtonType.Link && !rounded ? true : false}
       color={setColor(type)}
       disableElevation
       variant={type == ButtonType.Link ? 'text' : 'contained'}
