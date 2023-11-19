@@ -12,9 +12,10 @@ interface PaperProps {
 const Paper: FC<PaperProps> = ({ children, sx, touchable = false, onClick }) => {
   return (
     <ButtonBase
-      disabled={!touchable}
+      disableRipple={!touchable}
       sx={{
         ':hover': {
+          cursor: touchable ? 'pointer' : 'default',
           borderRadius: '12px',
           backgroundColor: touchable ? 'rgb(255, 255, 255, 0.05)' : 'transparent',
         },
