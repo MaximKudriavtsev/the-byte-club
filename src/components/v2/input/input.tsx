@@ -12,6 +12,7 @@ interface InputProps {
   fullWidth?: boolean;
   size?: 'small' | 'medium';
   sx?: SxProps;
+  onTextChange?: (text: string) => void;
 }
 
 const Input: FC<InputProps> = ({
@@ -23,6 +24,7 @@ const Input: FC<InputProps> = ({
   fullWidth,
   size,
   sx,
+  onTextChange,
 }) => {
   const [text, setText] = useState(value);
 
@@ -36,7 +38,11 @@ const Input: FC<InputProps> = ({
       disabled={disabled}
       placeholder={placeholder}
       value={text}
-      onChange={e => setText(e.target.value)}
+      onChange={e => {
+        setText(e.target.value);
+        if (!onTextChange) return;
+        onTextChange(e.target.value);
+      }}
       InputProps={{
         startAdornment: icon ? <InputAdornment position='start'>{icon}</InputAdornment> : null,
         disableUnderline: true,
