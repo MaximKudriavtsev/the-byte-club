@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 import { Checkbox } from '@mui/material';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Input } from '../input/input';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import { themeColors } from '../../../theme/config.theme';
@@ -11,15 +11,22 @@ interface VariantTemplateProps {
   variant: Variant;
   onDelete?: () => void;
   disableDelete?: boolean;
+  orderNumber?: number;
 }
 
 const VariantTemplate: FC<VariantTemplateProps> = ({
   variant,
   onDelete,
   disableDelete = false,
+  orderNumber,
 }) => {
   const [text, setText] = useState(variant.text);
   const [isRight, setRight] = useState(variant.isRight);
+
+  useEffect(() => {
+    variant.text = text;
+    variant.isRight = isRight;
+  }, [text, isRight]);
 
   return (
     <Grid container alignItems='center' spacing={1}>
@@ -28,7 +35,7 @@ const VariantTemplate: FC<VariantTemplateProps> = ({
       </Grid>
       <Grid item xs={8}>
         <Input
-          label={`Вариант ${variant.id}`}
+          label={`Вариант ${orderNumber || variant.id}`}
           value={text}
           onTextChange={t => setText(t)}
           fullWidth

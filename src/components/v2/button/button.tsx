@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { LoadingButton as MaterialButton } from '@mui/lab';
 import { Typography } from '@mui/material';
 import { SxProps } from '@mui/system';
+import { boxShadow } from '../../../theme/config.theme';
 
 export enum ButtonType {
   Primary,
@@ -22,6 +23,7 @@ interface ButtonProps {
   sx?: SxProps;
   rounded?: boolean;
   roundSize?: number;
+  shadow?: boolean;
 }
 
 const setColor = (buttonType: ButtonType) => {
@@ -43,6 +45,7 @@ const Button: FC<ButtonProps> = ({
   type = ButtonType.Primary,
   rounded = false,
   roundSize = 32,
+  shadow = false,
 }) => {
   const roundedStyle: SxProps = {
     minWidth: roundSize,
@@ -62,7 +65,7 @@ const Button: FC<ButtonProps> = ({
 
   return (
     <MaterialButton
-      sx={{ ...(rounded ? roundedStyle : {}), ...sx }}
+      sx={{ ...(rounded ? roundedStyle : {}), ...sx, ...(shadow ? { boxShadow } : {}) }}
       loading={loading}
       fullWidth={fullWidth}
       endIcon={endIcon}

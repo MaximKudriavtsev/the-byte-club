@@ -13,6 +13,7 @@ import { themeColors } from '../../../theme/config.theme';
 
 interface QuestionTemplateProps {
   question: QuestionType;
+  orderNumber?: number;
   disableDelete?: boolean;
   onDelete?: () => void;
 }
@@ -26,8 +27,8 @@ const addVariant = (variants: Variant[]): Variant[] => {
 
   return variants.concat([
     {
-      questionId: variants[0].questionId,
       id: highestId + 1,
+      questionId: variants[0].questionId,
       text: '',
       isRight: false,
     },
@@ -38,16 +39,17 @@ const QuestionTemplate: FC<QuestionTemplateProps> = ({
   question,
   disableDelete = false,
   onDelete,
+  orderNumber,
 }) => {
   const [title, setTitle] = useState(question.title);
   const [variants, setVariants] = useState<Variant[]>(question.variants);
 
   return (
-    <Paper touchable={false} sx={{ maxWidth: 500 }}>
+    <Paper touchable={false} sx={{ maxWidth: 500, pt: 2, pb: 2 }}>
       <Grid container spacing={1} alignItems={'center'}>
         <Grid item xs={10}>
           <Input
-            label={`Вопрос ${question.id}`}
+            label={`Вопрос ${orderNumber || question.id}`}
             onTextChange={text => setTitle(text)}
             value={title}
             fullWidth
@@ -71,9 +73,9 @@ const QuestionTemplate: FC<QuestionTemplateProps> = ({
         <Grid item xs={12}>
           <TransitionGroup>
             {variants.map((variant, i) => (
-              <Collapse key={i} in={true} sx={{ mt: 1 }}>
+              <Collapse key={variant.id} in={true} sx={{ mt: 1 }}>
                 <VariantTemplate
-                  key={i}
+                  orderNumber={i + 1}
                   variant={variant}
                   disableDelete={variants.length < 3}
                   onDelete={() => setVariants(removeVariant(variants, variant.id))}
@@ -86,7 +88,7 @@ const QuestionTemplate: FC<QuestionTemplateProps> = ({
           <Button
             rounded={true}
             type={ButtonType.Secondary}
-            sx={{ alignSelf: 'center', mt: 1 }}
+            sx={{ alignSelf: 'center', mt: 2 }}
             onClick={() => setVariants(addVariant(variants))}
           >
             <AddIcon />
