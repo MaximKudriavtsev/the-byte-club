@@ -9,6 +9,15 @@ import { muiInputTheme } from './input.theme';
 import { muiPaperTheme } from './paper.theme';
 
 export const muiTheme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 320,
+      md: 470,
+      lg: 900,
+      xl: 1200,
+    },
+  },
   typography: {
     fontFamily: ['-apple-system', '"Helvetica Neue"', '"Segoe UI"', 'Roboto', 'Aarial'].join(','),
     h3: {
