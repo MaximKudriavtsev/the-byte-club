@@ -13,8 +13,9 @@ const IconedLabel: FC<IconedLabelProps> = ({ icon, text }) => {
       sx={{
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        p: 0.6,
+        justifyContent: 'space-between',
+        paddingX: 1,
+        paddingY: 0.6,
         minWidth: 80,
       }}
     >

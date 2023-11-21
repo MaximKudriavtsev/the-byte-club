@@ -13,6 +13,7 @@ interface InputProps {
   size?: 'small' | 'medium';
   sx?: SxProps;
   onTextChange?: (text: string) => void;
+  multiline?: boolean;
 }
 
 const Input: FC<InputProps> = ({
@@ -25,6 +26,7 @@ const Input: FC<InputProps> = ({
   size,
   sx,
   onTextChange,
+  multiline = false,
 }) => {
   const [text, setText] = useState(value);
 
@@ -38,6 +40,7 @@ const Input: FC<InputProps> = ({
       disabled={disabled}
       placeholder={placeholder}
       value={text}
+      multiline={multiline}
       onChange={e => {
         setText(e.target.value);
         if (!onTextChange) return;

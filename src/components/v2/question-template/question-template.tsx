@@ -53,6 +53,7 @@ const QuestionTemplate: FC<QuestionTemplateProps> = ({
             onTextChange={text => setTitle(text)}
             value={title}
             fullWidth
+            multiline
           />
         </Grid>
         <Grid item xs={2}>

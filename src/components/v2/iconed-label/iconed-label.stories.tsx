@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { IconedLabel } from './iconed-label';
 import StarsIcon from '@mui/icons-material/Stars';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import NumberIcon from '@mui/icons-material/Numbers';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import { themeColors } from '../../../theme/config.theme';
 
 const meta = {
@@ -18,14 +18,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Star: Story = {
   args: {
-    icon: <StarsIcon sx={{ color: '#d4af37' }} />,
+    icon: <StarsIcon sx={{ color: themeColors.gold }} />,
     text: '300',
   },
 };
 
 export const Position: Story = {
   args: {
-    icon: <NumberIcon />,
+    icon: <EmojiEventsIcon sx={{ color: themeColors.gold }} />,
     text: '1',
   },
 };

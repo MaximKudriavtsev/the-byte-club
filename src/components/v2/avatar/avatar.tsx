@@ -3,19 +3,19 @@ import Tooltip from '@mui/material/Tooltip';
 import { default as MaterialAvatar } from '@mui/material/Avatar';
 import { User } from '../../../api/types';
 import { stringToColor } from '../../utils';
-import { Typography } from '@mui/material';
+import { SxProps, Typography } from '@mui/material';
 
 interface AvatarProps {
   user: User;
-  className?: string;
+  sx?: SxProps;
   size?: number;
 }
 
-const Avatar: FC<AvatarProps> = ({ user, className, size = 40 }) => {
-  function hasWhiteSpace(s: string) {
-    return s.indexOf(' ') >= 0;
-  }
+function hasWhiteSpace(s: string) {
+  return s.indexOf(' ') >= 0;
+}
 
+const Avatar: FC<AvatarProps> = ({ user, sx, size = 40 }) => {
   function stringAvatar(name: string) {
     const letters = hasWhiteSpace(name)
       ? `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`
@@ -25,8 +25,13 @@ const Avatar: FC<AvatarProps> = ({ user, className, size = 40 }) => {
         bgcolor: stringToColor(name),
         width: size,
         height: size,
+        ...sx,
       },
-      children: <Typography sx={{ fontSize: size / 2.5 }}>{letters}</Typography>,
+      children: (
+        <Typography sx={{ fontSize: size / 2.5 }} variant='h2'>
+          {letters}
+        </Typography>
+      ),
     };
   }
 
@@ -34,13 +39,12 @@ const Avatar: FC<AvatarProps> = ({ user, className, size = 40 }) => {
     <Tooltip title={user.name}>
       {user.image ? (
         <MaterialAvatar
-          sx={{ width: size, height: size }}
+          sx={{ ...{ width: size, height: size }, ...sx }}
           alt={user.name}
           src={user.image}
-          className={className}
         />
       ) : (
-        <MaterialAvatar {...stringAvatar(user.name)} className={className} />
+        <MaterialAvatar {...stringAvatar(user.name)} />
       )}
     </Tooltip>
   );
